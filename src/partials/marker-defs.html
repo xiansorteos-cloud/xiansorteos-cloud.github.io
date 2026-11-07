@@ -1,0 +1,29 @@
+<defs>
+  <!-- Provisional vector artwork (original, drawn for this concept). Replace the part groups with the team's final per-part renders. -->
+  <linearGradient id="g-yellow" x1="0" x2="1" y1="0" y2="0">
+    <stop offset="0" stop-color="#D99A0B"/><stop offset=".16" stop-color="#F6C21F"/><stop offset=".4" stop-color="#FFE57F"/><stop offset=".68" stop-color="#F8C92E"/><stop offset="1" stop-color="#CF900A"/>
+  </linearGradient>
+  <linearGradient id="g-green" x1="0" x2="1" y1="0" y2="0">
+    <stop offset="0" stop-color="#0E6740"/><stop offset=".2" stop-color="#1E9A62"/><stop offset=".42" stop-color="#63D09A"/><stop offset=".72" stop-color="#1E9A62"/><stop offset="1" stop-color="#0B5636"/>
+  </linearGradient>
+  <linearGradient id="g-shade" x1="0" x2="1" y1="0" y2="0">
+    <stop offset="0" stop-color="#000" stop-opacity=".26"/><stop offset=".3" stop-color="#fff" stop-opacity=".26"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".3"/>
+  </linearGradient>
+  <linearGradient id="g-glass" x1="0" x2="1" y1="0" y2="0">
+    <stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".25" stop-color="#fff" stop-opacity=".15"/><stop offset=".7" stop-color="#fff" stop-opacity=".05"/><stop offset="1" stop-color="#fff" stop-opacity=".35"/>
+  </linearGradient>
+  <clipPath id="tip-clip"><path d="M-24,130 C-22,92 -14,50 -7,16 Q0,-3 7,16 C14,50 22,92 24,130 Z"/></clipPath>
+
+  <!-- Replaceable tip: porous, tapered fibre cone + collar. Local origin = tip apex. -->
+  <g id="tip-art">
+    <path d="M-24,130 C-22,92 -14,50 -7,16 Q0,-3 7,16 C14,50 22,92 24,130 Z" style="fill:var(--marker-ink,#2F6FE4)"/>
+    <g clip-path="url(#tip-clip)" fill="none" stroke-linecap="round">
+      <path d="M-10,30 l3,16 M2,22 l-2,14 M8,40 l-3,18 M-14,64 l4,16 M-3,56 l2,18 M10,72 l-3,16 M-18,96 l5,14 M-6,88 l1,20 M5,98 l-2,18 M16,92 l-4,20 M-1,120 l0,12 M-12,118 l3,12 M12,116 l-3,14" stroke="#fff" stroke-opacity=".28" stroke-width="1.2"/>
+      <path d="M-6,34 l2,15 M5,52 l-2,14 M-13,80 l3,14 M2,76 l1,18 M13,104 l-2,14 M-8,106 l1,16" stroke="#000" stroke-opacity=".22" stroke-width="1.1"/>
+    </g>
+    <path d="M-24,130 C-22,92 -14,50 -7,16 Q0,-3 7,16 C14,50 22,92 24,130 Z" fill="url(#g-shade)"/>
+    <rect x="-32" y="128" width="64" height="42" rx="9" fill="url(#g-green)"/>
+    <rect x="-32" y="134" width="64" height="4" fill="#06301e" opacity=".35"/>
+    <rect x="-30" y="158" width="60" height="3" fill="#06301e" opacity=".3"/>
+  </g>
+</defs>

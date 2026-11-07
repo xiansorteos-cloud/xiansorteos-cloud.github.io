@@ -1,0 +1,57 @@
+<!-- Draw order (back to front): reservoir, plug, tip, body, cap. Base y = assembled top of each part. -->
+<g id="part-reservoir" data-base="300">
+  <g transform="translate(0,300)">
+    <rect x="-12" y="-14" width="24" height="16" rx="4" fill="#9fb7e8"/>
+    <path d="M-31,22 C-31,8 -18,0 -10,0 H10 C18,0 31,8 31,22 V278 C31,292 18,300 10,300 H-10 C-18,300 -31,292 -31,278 Z" style="fill:var(--marker-ink,#2F6FE4);fill-opacity:.22" stroke="#7a8fb8" stroke-width="2"/>
+    <path d="M-27,92 H27 V278 C27,289 17,296 8,296 H-8 C-17,296 -27,289 -27,278 Z" style="fill:var(--marker-ink,#2F6FE4)" class="ink-level"/>
+    <path d="M-27,92 H27" stroke="#fff" stroke-opacity=".5" stroke-width="2"/>
+    <path d="M-31,22 C-31,8 -18,0 -10,0 H10 C18,0 31,8 31,22 V278 C31,292 18,300 10,300 H-10 C-18,300 -31,292 -31,278 Z" fill="url(#g-glass)"/>
+    <circle id="a-reservoir" cx="-31" cy="150" r="1" fill="none"/>
+  </g>
+</g>
+<g id="part-plug" data-base="660">
+  <g transform="translate(0,660)">
+    <rect x="-38" y="-24" width="76" height="26" rx="4" fill="#127a4b"/>
+    <path d="M-38,-18 l76,6 M-38,-8 l76,6" stroke="#06301e" stroke-opacity=".4" stroke-width="2"/>
+    <path d="M-46,4 H46 V56 C46,65 38,70 30,70 H-30 C-38,70 -46,65 -46,56 Z" fill="url(#g-green)"/>
+    <rect x="-48" y="0" width="96" height="10" rx="4" fill="url(#g-green)"/>
+    <path d="M-24,22 V58 M-12,22 V58 M0,22 V58 M12,22 V58 M24,22 V58" stroke="#06301e" stroke-opacity=".28" stroke-width="2.5" stroke-linecap="round"/>
+    <circle id="a-plug" cx="46" cy="36" r="1" fill="none"/>
+  </g>
+</g>
+<g id="part-tip" data-base="40">
+  <g transform="translate(0,40)">
+    <g id="tip-main"><use href="#tip-art"/></g>
+    <g id="tip-spare" style="opacity:0"><use href="#tip-art"/></g>
+    <circle id="a-tip" cx="-24" cy="95" r="1" fill="none"/>
+  </g>
+</g>
+<g id="part-body" data-base="190">
+  <g transform="translate(0,190)">
+    <path d="M-34,0 H34 C37,36 45,66 46,104 V470 H-46 V104 C-45,66 -37,36 -34,0 Z" fill="url(#g-yellow)"/>
+    <path d="M-34,0 H34 C37,36 45,66 46,104 V470 H-46 V104 C-45,66 -37,36 -34,0 Z" fill="url(#g-shade)" opacity=".5"/>
+    <rect x="-32" y="-2" width="64" height="8" rx="3" fill="#B97F00" opacity=".35"/>
+    <text transform="translate(8,292) rotate(-90)" text-anchor="middle" font-family="Avenir Next, Segoe UI, system-ui, sans-serif" font-size="15" font-weight="800" letter-spacing="3.5" fill="#8C5D00" fill-opacity=".85">SUPER TIPS REFILL</text>
+    <path d="M-46,436 H46 M-46,445 H46" stroke="#B97F00" stroke-opacity=".5" stroke-width="2"/>
+    <g id="open-body">
+      <ellipse cx="0" cy="470" rx="46" ry="10" fill="#C98E06"/>
+      <ellipse cx="0" cy="470" rx="37" ry="7" fill="#4b3200"/>
+      <ellipse cx="0" cy="469" rx="31" ry="4.5" fill="#2a1c00"/>
+    </g>
+    <circle id="a-body" cx="46" cy="130" r="1" fill="none"/>
+  </g>
+</g>
+<g id="part-cap" data-base="0">
+  <g transform="translate(0,0)">
+    <path d="M-52,300 V46 C-52,18 -34,0 0,0 C34,0 52,18 52,46 V300 Z" fill="url(#g-green)"/>
+    <path d="M-52,300 V46 C-52,18 -34,0 0,0 C34,0 52,18 52,46 V300 Z" fill="url(#g-shade)" opacity=".45"/>
+    <rect x="-34" y="18" width="9" height="230" rx="4.5" fill="#fff" opacity=".28"/>
+    <rect x="-52" y="238" width="104" height="9" fill="url(#g-yellow)"/>
+    <rect x="-56" y="280" width="112" height="20" rx="7" fill="url(#g-green)"/>
+    <g id="open-cap">
+      <ellipse cx="0" cy="300" rx="56" ry="9" fill="#0b4a2d"/>
+      <ellipse cx="0" cy="300" rx="46" ry="6" fill="#052a19"/>
+    </g>
+    <circle id="a-cap" cx="52" cy="150" r="1" fill="none"/>
+  </g>
+</g>
