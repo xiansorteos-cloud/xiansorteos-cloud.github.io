@@ -27,6 +27,14 @@ PAGES = [
      "For schools — Super Tips Refill concept",
      "How a refillable, replaceable-tip marker concept might fit school life: who uses and buys, what differs from families, and the practical questions to answer first.",
      "page-schools"),
+    ("relaunch", "relaunch/index.html", "relaunch",
+     "Brand and advert — Super Tips Refill concept",
+     "Prototype of the relaunch: concept visual identity, packaging and point-of-sale sketches and a 30-second advert storyboard. Student concept, not affiliated with Crayola.",
+     "page-relaunch"),
+    ("strategy", "strategy/index.html", "strategy",
+     "Strategy — Super Tips Refill concept",
+     "Positioning, segments, whole product, Strategy Canvas, behaviour change and a transparent first look at the money, with assumptions clearly labelled.",
+     "page-strategy"),
     ("kit", "explore-the-kit/index.html", "kit",
      "Explore the kit — Super Tips Refill concept",
      "A non-transactional kit explorer for the proposed concept marker, ink refill and spare tips. Nothing is for sale; nothing is saved or sent.",
@@ -94,6 +102,49 @@ def schem(step):
     return "".join(out)
 
 
+FACTORS = [
+    ("Low upfront price", 5, 2, 3),
+    ("Washable, kid-friendly ink", 5, 2, 4),
+    ("Body reuse", 1, 4, 4),
+    ("Replaceable tip", 1, 3, 4),
+    ("Low waste at end of life", 1, 3, 3),
+    ("Easy school provisioning", 5, 3, 2),
+    ("Child suitability", 5, 2, 3),
+    ("Brand trust", 5, 3, 4),
+]
+CURVES = [("Today's Super Tips (Crayola)", "#25231F", "", 1),
+          ("Refillable stationery markers (Staedtler, Faber-Castell)", "#2F6FE4", "", 2),
+          ("Super Tips Refill (concept)", "#F2674F", "8 6", 3)]
+
+
+def canvas():
+    W, H, L, R, T, B = 760, 330, 50, 20, 20, 90
+    n = len(FACTORS)
+    xs = [L + i * (W - L - R) / (n - 1) for i in range(n)]
+    y = lambda v: T + (5 - v) * (H - T - B) / 4
+    o = [f'<svg class="canvas" viewBox="0 0 {W} {H}" role="img" aria-labelledby="cv-t cv-d" focusable="false"><title id="cv-t">Strategy Canvas, indicative scores</title><desc id="cv-d">Three curves scored 1 to 5 on eight factors. A table with the same scores follows.</desc>']
+    for v in range(1, 6):
+        o.append(f'<line x1="{L}" x2="{W-R}" y1="{y(v)}" y2="{y(v)}" stroke="#E4D8B9"/><text x="{L-10}" y="{y(v)+4}" text-anchor="end" font-size="11" fill="#5A574F">{v}</text>')
+    for x, f in zip(xs, FACTORS):
+        o.append(f'<line x1="{x}" x2="{x}" y1="{T}" y2="{H-B}" stroke="#EFE5C8"/>')
+        words = f[0].split()
+        mid = (len(words) + 1) // 2
+        for k, line in enumerate([" ".join(words[:mid]), " ".join(words[mid:])]):
+            o.append(f'<text x="{x}" y="{H-B+20+k*14}" text-anchor="middle" font-size="11" fill="#25231F">{line}</text>')
+    for name, col, dash, idx in CURVES:
+        pts = " ".join(f"{x:.1f},{y(f[idx]):.1f}" for x, f in zip(xs, FACTORS))
+        d = f' stroke-dasharray="{dash}"' if dash else ""
+        o.append(f'<polyline points="{pts}" fill="none" stroke="{col}" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"{d}/>')
+        for x, f in zip(xs, FACTORS):
+            o.append(f'<circle cx="{x:.1f}" cy="{y(f[idx]):.1f}" r="4" fill="{col}"/>')
+    o.append('</svg>')
+    leg = '<ul class="legend">' + "".join(f'<li><i style="background:{c}"></i>{n}</li>' for n, c, d, i in CURVES) + '<li class="legend-pend"><i></i>Second competitor or group: to be chosen</li></ul>'
+    rows = "".join(f'<tr><th scope="row">{f[0]}</th><td>{f[1]}</td><td>{f[2]}</td><td>{f[3]}</td></tr>' for f in FACTORS)
+    tbl = ('<details class="canvas-data"><summary>View the scores as a table</summary><div class="table-wrap"><table class="grid"><thead><tr><th scope="col">Factor</th>'
+           + "".join(f'<th scope="col">{n}</th>' for n, *_ in CURVES) + f'</tr></thead><tbody>{rows}</tbody></table></div></details>')
+    return '<div class="canvas-wrap">' + "".join(o) + '</div>' + leg + tbl
+
+
 def build():
     layout = read("layout.html")
     header = read("partials/header.html")
@@ -101,11 +152,12 @@ def build():
     defs = read("partials/marker-defs.html")
     for slug, out_name, key, title, desc, bodyclass in PAGES:
         body = read(f"pages/{slug}.html")
+        body = body.replace("{{CANVAS}}", canvas())
         body = body.replace("{{MARKER_DEFS}}", defs)
         body = body.replace("{{MARKER_PARTS}}", marker_parts(1.0 if slug == "home" else 0.55))
         body = re.sub(r"\{\{SCHEM:(\d)\}\}", lambda m: schem(int(m.group(1))), body)
         h = header
-        for k in ("home", "how", "schools", "kit", "evidence"):
+        for k in ("home", "how", "schools", "kit", "relaunch", "strategy", "evidence"):
             h = h.replace("{{cur:%s}}" % k, ' aria-current="page"' if k == key else "")
         html = (layout.replace("{{TITLE}}", title).replace("{{DESC}}", desc)
                 .replace("{{BODYCLASS}}", bodyclass).replace("{{HEADER}}", h)

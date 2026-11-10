@@ -315,8 +315,41 @@
     update();
   }
 
+  /* ---------- Assumption calculator (arithmetic on editable placeholders) ---------- */
+  function initCalc() {
+    var form = document.getElementById('calc');
+    if (!form) return;
+    var defaults = { 'c-pack': 3.25, 'c-count': 12, 'c-refill': 1.5, 'c-per': 12, 'c-prem': 0.5 };
+    function v(id) { var n = parseFloat(document.getElementById(id).value); return isFinite(n) ? n : 0; }
+    function gbp(n) { return '£' + n.toFixed(2); }
+    function update() {
+      var pack = v('c-pack'), count = Math.max(1, v('c-count')), refill = v('c-refill'), per = Math.max(1, v('c-per')), prem = v('c-prem');
+      var newM = pack / count, refM = refill / per, save = newM - refM;
+      document.getElementById('o-new').textContent = gbp(newM);
+      document.getElementById('o-ref').textContent = gbp(refM);
+      document.getElementById('o-save').textContent = (save >= 0 ? '' : '-') + gbp(Math.abs(save));
+      var be = document.getElementById('o-be'), msg = document.getElementById('o-msg');
+      if (save <= 0) {
+        be.textContent = 'never';
+        msg.textContent = 'On these numbers a refill costs as much as, or more than, a new marker, so refilling would not save money.';
+      } else if (prem <= 0) {
+        be.textContent = 'none needed';
+        msg.textContent = 'With no upfront extra, every refill cycle is cheaper on these assumptions.';
+      } else {
+        var n = Math.ceil(prem / save);
+        be.textContent = n + (n === 1 ? ' cycle' : ' cycles');
+        msg.textContent = 'On these placeholder numbers the extra upfront cost is recovered after about ' + n + ' refill ' + (n === 1 ? 'cycle' : 'cycles') + '. Real use is untested.';
+      }
+    }
+    form.addEventListener('input', update);
+    var reset = document.getElementById('calc-reset');
+    if (reset) reset.addEventListener('click', function () { Object.keys(defaults).forEach(function (k) { document.getElementById(k).value = defaults[k]; }); update(); });
+    update();
+  }
+
   safe(initNav, 'nav');
   safe(initReveal, 'reveal');
   safe(initStory, 'story');
   safe(initKit, 'kit');
+  safe(initCalc, 'calc');
 })();
