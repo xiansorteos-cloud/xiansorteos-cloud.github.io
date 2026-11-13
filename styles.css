@@ -423,3 +423,19 @@ html:not(.js) .story-ui{display:none}
 .f1{background:#FFE9A8}.f2{background:#CBDCFA}.f3{background:#BDEBD3}.f4{background:#FFCFC5}.f5{background:#FFF1C9}.f6{background:var(--cream)}
 @media (max-width:900px){.story-board{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){.story-board{grid-template-columns:1fr}}
+
+/* consumer restructure (13 Nov 2026) */
+a.pill{text-decoration:none}
+a.pill:hover,a.pill:focus-visible{background:var(--text);color:#fff}
+.foot-list + .foot-title{margin-top:18px}
+.box-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:22px}
+.box-item{background:#fff;border:2px solid var(--text);border-radius:var(--r);padding:20px}
+.box-item h3{margin:.2em 0 .4em}
+.box-item .who{font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0}
+.steps3{list-style:none;counter-reset:s;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:22px 0 0}
+.steps3 li{counter-increment:s;background:#fff;border:2px solid var(--text);border-radius:var(--r);padding:20px}
+.steps3 li::before{content:counter(s);display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--yellow);font-weight:800;margin-bottom:8px}
+.faq details{border-bottom:1px solid #E4D8B9;padding:14px 0}
+.faq summary{cursor:pointer;font-weight:800}
+.faq details p{margin:.6em 0 0}
+@media (max-width:820px){.box-grid,.steps3{grid-template-columns:1fr}}

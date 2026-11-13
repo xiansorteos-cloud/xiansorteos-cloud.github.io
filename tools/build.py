@@ -11,7 +11,7 @@ import re
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SRC = ROOT / "src"
-V = "20261107"  # cache-buster; bump on every deploy
+V = "20261113"  # cache-buster; bump on every deploy
 
 PAGES = [
     # slug, output, nav key, title, description, body class
@@ -24,11 +24,11 @@ PAGES = [
      "A conceptual, adult-managed sequence for refilling ink and replacing a tip, with its limits and the tests still needed. Not instructions for any marker sold today.",
      "page-how"),
     ("schools", "for-schools/index.html", "schools",
-     "For schools — Super Tips Refill concept",
-     "How a refillable, replaceable-tip marker concept might fit school life: who uses and buys, what differs from families, and the practical questions to answer first.",
+     "Schools and nurseries — Super Tips Refill concept",
+     "Refillable washable markers for primary schools and early years settings: one order a year, a refill routine run by an adult, and pupils who just draw. Student concept, nothing for sale.",
      "page-schools"),
     ("relaunch", "relaunch/index.html", "relaunch",
-     "Brand and advert — Super Tips Refill concept",
+     "Brand and campaign plan — Super Tips Refill concept",
      "Prototype of the relaunch: concept visual identity, packaging and point-of-sale sketches and a 30-second advert storyboard. Student concept, not affiliated with Crayola.",
      "page-relaunch"),
     ("strategy", "strategy/index.html", "strategy",
@@ -102,19 +102,22 @@ def schem(step):
     return "".join(out)
 
 
+# Scores from the group's Person 2 work (Delexa), checked 12/11/2026.
+# Order: factor, Super Tips today, Super Tips Refill (concept, assumptions), BIC Kids Visa, STABILO Trio Scribbi
 FACTORS = [
-    ("Low upfront price", 5, 2, 3),
-    ("Washable, kid-friendly ink", 5, 2, 4),
-    ("Body reuse", 1, 4, 4),
-    ("Replaceable tip", 1, 3, 4),
-    ("Low waste at end of life", 1, 3, 3),
-    ("Easy school provisioning", 5, 3, 2),
-    ("Child suitability", 5, 2, 3),
-    ("Brand trust", 5, 3, 4),
+    ("Low upfront price", 4, 3, 5, 1),
+    ("Washable, kid-friendly ink", 5, 5, 4, 5),
+    ("Body reuse", 1, 5, 1, 1),
+    ("Replaceable tip", 1, 5, 1, 1),
+    ("Low waste at end of life", 1, 3, 1, 1),
+    ("Easy school provisioning", 5, 4, 5, 2),
+    ("Child suitability", 4, 4, 3, 5),
+    ("Special colour editions", 4, 1, 1, 1),
 ]
-CURVES = [("Today's Super Tips (Crayola)", "#25231F", "", 1),
-          ("Refillable stationery markers (Staedtler, Faber-Castell)", "#2F6FE4", "", 2),
-          ("Super Tips Refill (concept)", "#F2674F", "8 6", 3)]
+CURVES = [("Super Tips today", "#25231F", "", 1),
+          ("BIC Kids Visa", "#2F6FE4", "", 3),
+          ("STABILO Trio Scribbi", "#2E8B6E", "", 4),
+          ("Super Tips Refill (concept)", "#F2674F", "8 6", 2)]
 
 
 def canvas():
@@ -122,7 +125,7 @@ def canvas():
     n = len(FACTORS)
     xs = [L + i * (W - L - R) / (n - 1) for i in range(n)]
     y = lambda v: T + (5 - v) * (H - T - B) / 4
-    o = [f'<svg class="canvas" viewBox="0 0 {W} {H}" role="img" aria-labelledby="cv-t cv-d" focusable="false"><title id="cv-t">Strategy Canvas, indicative scores</title><desc id="cv-d">Three curves scored 1 to 5 on eight factors. A table with the same scores follows.</desc>']
+    o = [f'<svg class="canvas" viewBox="0 0 {W} {H}" role="img" aria-labelledby="cv-t cv-d" focusable="false"><title id="cv-t">Strategy Canvas, indicative scores</title><desc id="cv-d">Four curves scored 1 to 5 on eight factors. A table with the same scores follows.</desc>']
     for v in range(1, 6):
         o.append(f'<line x1="{L}" x2="{W-R}" y1="{y(v)}" y2="{y(v)}" stroke="#E4D8B9"/><text x="{L-10}" y="{y(v)+4}" text-anchor="end" font-size="11" fill="#5A574F">{v}</text>')
     for x, f in zip(xs, FACTORS):
@@ -138,8 +141,8 @@ def canvas():
         for x, f in zip(xs, FACTORS):
             o.append(f'<circle cx="{x:.1f}" cy="{y(f[idx]):.1f}" r="4" fill="{col}"/>')
     o.append('</svg>')
-    leg = '<ul class="legend">' + "".join(f'<li><i style="background:{c}"></i>{n}</li>' for n, c, d, i in CURVES) + '<li class="legend-pend"><i></i>Second competitor or group: to be chosen</li></ul>'
-    rows = "".join(f'<tr><th scope="row">{f[0]}</th><td>{f[1]}</td><td>{f[2]}</td><td>{f[3]}</td></tr>' for f in FACTORS)
+    leg = '<ul class="legend">' + "".join(f'<li><i style="background:{c}"></i>{n}</li>' for n, c, d, i in CURVES) + '</ul>'
+    rows = "".join(f'<tr><th scope="row">{f[0]}</th>' + "".join(f'<td>{f[i]}</td>' for _, _, _, i in CURVES) + '</tr>' for f in FACTORS)
     tbl = ('<details class="canvas-data"><summary>View the scores as a table</summary><div class="table-wrap"><table class="grid"><thead><tr><th scope="col">Factor</th>'
            + "".join(f'<th scope="col">{n}</th>' for n, *_ in CURVES) + f'</tr></thead><tbody>{rows}</tbody></table></div></details>')
     return '<div class="canvas-wrap">' + "".join(o) + '</div>' + leg + tbl

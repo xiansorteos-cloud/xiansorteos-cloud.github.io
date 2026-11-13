@@ -319,7 +319,7 @@
   function initCalc() {
     var form = document.getElementById('calc');
     if (!form) return;
-    var defaults = { 'c-pack': 3.25, 'c-count': 12, 'c-refill': 1.5, 'c-per': 12, 'c-prem': 0.5 };
+    var defaults = { 'c-pack': 3.75, 'c-count': 12, 'c-refill': 1.5, 'c-per': 12, 'c-prem': 0.5 };
     function v(id) { var n = parseFloat(document.getElementById(id).value); return isFinite(n) ? n : 0; }
     function gbp(n) { return '£' + n.toFixed(2); }
     function update() {
