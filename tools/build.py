@@ -11,7 +11,7 @@ import re
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SRC = ROOT / "src"
-V = "20261115"  # cache-buster; bump on every deploy
+V = "20261115b"  # cache-buster; bump on every deploy
 
 PAGES = [
     # slug, output, nav key, title, description, body class
@@ -157,7 +157,7 @@ def build():
         body = read(f"pages/{slug}.html")
         body = body.replace("{{CANVAS}}", canvas())
         body = body.replace("{{MARKER_DEFS}}", defs)
-        body = body.replace("{{MARKER_PARTS}}", marker_parts(1.0 if slug == "home" else 0.55))
+        body = body.replace("{{MARKER_PARTS}}", marker_parts(1.0 if slug == "how" else 0.55))
         body = re.sub(r"\{\{SCHEM:(\d)\}\}", lambda m: schem(int(m.group(1))), body)
         h = header
         for k in ("home", "how", "schools", "kit", "relaunch", "strategy", "evidence"):

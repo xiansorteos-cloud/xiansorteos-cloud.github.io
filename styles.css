@@ -149,6 +149,13 @@ html:not(.js) .story-ui{display:none}
 .js:not(.is-static) .story-text{grid-template-rows:1fr auto}
 .js:not(.is-static) .chapter{grid-row:1}
 
+/* ===== INK HERO (home) ===== */
+.inkhero{position:relative;background:radial-gradient(900px 640px at 72% 38%,#FFE8A3 0,transparent 62%),var(--yellow)}
+.js:not(.is-static) .inkhero{height:420vh}
+.js:not(.is-static) #ink-stroke{stroke-dashoffset:1}
+#ink-marker{will-change:transform,opacity}
+html:not(.js) #ink-bottle{opacity:1!important}
+
 @media (max-width:860px){
   :root{--hdr:56px}
   .hdr{gap:10px}
@@ -167,6 +174,7 @@ html:not(.js) .story-ui{display:none}
   .strokes-big{display:none}
   .cards4,.triple{grid-template-columns:1fr 1fr}
   .js:not(.is-static) .story{height:640vh}
+  .js:not(.is-static) .inkhero{height:300vh}
   .js:not(.is-static) .story-pin{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto}
   .js:not(.is-static) .story-stage{grid-column:1;grid-row:1}
   .js:not(.is-static) .story-text{grid-column:1;grid-row:2;padding:12px 18px 8px;align-content:start;border-top:2px solid var(--text);background:var(--cream);grid-template-rows:auto auto}

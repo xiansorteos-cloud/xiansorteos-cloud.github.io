@@ -10,7 +10,7 @@
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="stylesheet" href="/styles.css?v=20261115">
+<link rel="stylesheet" href="/styles.css?v=20261115b">
 <script>document.documentElement.className += ' js';</script>
 </head>
 <body class="page-home">
@@ -35,184 +35,77 @@
 </header>
 
 <main id="main">
-<section class="story" id="story" aria-label="Product story: the Super Tips Refill concept marker, taken apart and put back together">
+<section class="inkhero" id="inkhero" aria-label="A marker that keeps drawing, until one colour runs out and you refill just that colour">
   <div class="story-pin">
-
-    <div class="story-stage" id="stage">
-      <svg id="scene" viewBox="-420 -470 840 1680" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="scene-title scene-desc" focusable="false">
-        <title id="scene-title">Exploded view of the concept marker</title>
-        <desc id="scene-desc">A slim white children's marker concept in five separate pieces along one axis: a coloured cap, a replaceable tip, a reusable white body, an ink wick and a coloured rear plug, all in the ink colour. This is a provisional illustration, not a validated design.</desc>
+    <div class="story-stage" id="ink-stage">
+      <svg id="ink-scene" viewBox="0 0 900 640" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="ink-scene-title ink-scene-desc" focusable="false">
+        <title id="ink-scene-title">A blue line drawn across the page, drying out, then a single-colour refill bottle appears</title>
+        <desc id="ink-scene-desc">Illustration only: a stroke appears to be drawn while scrolling, dries out at one end, then a drop-shaped single-colour refill bottle fades in. Provisional illustration, not a validated design.</desc>
         <defs>
-  <!-- Original vector artwork drawn for this concept, in the style of a slim white washable marker. Ink-coloured parts follow the selected ink colour. -->
-  <linearGradient id="g-white" x1="0" x2="1" y1="0" y2="0">
-    <stop offset="0" stop-color="#D9DADB"/><stop offset=".18" stop-color="#F4F4F2"/><stop offset=".42" stop-color="#FFFFFF"/><stop offset=".75" stop-color="#EDEDEB"/><stop offset="1" stop-color="#C9CACB"/>
-  </linearGradient>
-  <linearGradient id="g-shade" x1="0" x2="1" y1="0" y2="0">
-    <stop offset="0" stop-color="#000" stop-opacity=".32"/><stop offset=".28" stop-color="#fff" stop-opacity=".28"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".34"/>
-  </linearGradient>
-  <linearGradient id="g-glass" x1="0" x2="1" y1="0" y2="0">
-    <stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".25" stop-color="#fff" stop-opacity=".15"/><stop offset=".7" stop-color="#fff" stop-opacity=".05"/><stop offset="1" stop-color="#fff" stop-opacity=".35"/>
-  </linearGradient>
-  <!-- kept for older references -->
-  <linearGradient id="g-green" x1="0" x2="1"><stop offset="0" stop-color="#1E9A62"/><stop offset="1" stop-color="#1E9A62"/></linearGradient>
-  <linearGradient id="g-yellow" x1="0" x2="1"><stop offset="0" stop-color="#F6C21F"/><stop offset="1" stop-color="#F6C21F"/></linearGradient>
-  <clipPath id="tip-clip"><path d="M-17,130 C-15,96 -10,56 -5,20 Q0,2 5,20 C10,56 15,96 17,130 Z"/></clipPath>
-
-  <!-- Replaceable tip: tapered fibre cone + white collar. Local origin = tip apex. -->
-  <g id="tip-art">
-    <path d="M-17,130 C-15,96 -10,56 -5,20 Q0,2 5,20 C10,56 15,96 17,130 Z" style="fill:var(--marker-ink,#2F6FE4)"/>
-    <g clip-path="url(#tip-clip)" fill="none" stroke-linecap="round">
-      <path d="M-7,34 l2,15 M2,26 l-1,14 M6,44 l-2,17 M-10,66 l3,15 M-2,58 l1,17 M8,74 l-2,15 M-13,98 l4,13 M-4,90 l1,18 M4,100 l-1,17 M12,96 l-3,18" stroke="#fff" stroke-opacity=".3" stroke-width="1.2"/>
-    </g>
-    <path d="M-17,130 C-15,96 -10,56 -5,20 Q0,2 5,20 C10,56 15,96 17,130 Z" fill="url(#g-shade)"/>
-    <path d="M-24,128 H24 L22,170 H-22 Z" fill="url(#g-white)"/>
-    <path d="M-24,128 H24" stroke="#B9BABB" stroke-width="2"/>
-    <rect x="-22" y="150" width="44" height="3" fill="#A9AAAB" opacity=".6"/>
-  </g>
-</defs>
-
-        <g id="fx-strokes" class="fx" style="opacity:0" fill="none" stroke-linecap="round" aria-hidden="true">
-          <path id="stroke-thin" d="M-16,-36 C-70,-30 -92,-78 -146,-58 S-206,-4 -256,-36" pathLength="1" stroke-width="5" stroke-dasharray="1" stroke-dashoffset="1" style="stroke:var(--marker-ink,#2F6FE4)"/>
-          <path id="stroke-thick" d="M-18,-12 C-70,44 -118,4 -170,42 S-232,96 -268,64" pathLength="1" stroke-width="22" stroke-dasharray="1" stroke-dashoffset="1" style="stroke:var(--marker-ink,#2F6FE4);stroke-opacity:.85"/>
+          <pattern id="ink-streak" width="40" height="22" patternUnits="userSpaceOnUse" patternTransform="rotate(8)">
+            <rect width="40" height="22" fill="#000"/>
+            <rect y="0" width="40" height="4" fill="#fff"/>
+            <rect y="7" width="40" height="2" fill="#fff"/>
+            <rect y="11" width="40" height="5" fill="#fff"/>
+            <rect y="18.5" width="40" height="1.5" fill="#fff"/>
+          </pattern>
+          <linearGradient id="ink-solid-fade" gradientUnits="userSpaceOnUse" x1="500" y1="0" x2="720" y2="0">
+            <stop offset="0" stop-color="#fff" stop-opacity="1"/>
+            <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="ink-out-fade" gradientUnits="userSpaceOnUse" x1="690" y1="0" x2="880" y2="0">
+            <stop offset="0" stop-color="#000" stop-opacity="0"/>
+            <stop offset="1" stop-color="#000" stop-opacity=".72"/>
+          </linearGradient>
+          <mask id="ink-dry-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="900" height="640">
+            <rect x="0" y="0" width="900" height="640" fill="#fff"/>
+            <rect x="500" y="0" width="400" height="640" fill="url(#ink-streak)"/>
+            <rect x="500" y="0" width="400" height="640" fill="url(#ink-solid-fade)"/>
+            <rect x="690" y="0" width="210" height="640" fill="url(#ink-out-fade)"/>
+          </mask>
+        </defs>
+        <path id="ink-stroke" d="M60,420 C200,340 260,500 420,430 S640,300 840,380" fill="none" stroke="#1E63C6" stroke-width="44" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1.0001" stroke-dashoffset="0" mask="url(#ink-dry-mask)"/>
+        <g id="ink-bottle" style="opacity:0" transform="translate(735,255) scale(.62)" aria-hidden="true">
+          <rect x="-172" y="-11" width="40" height="22" rx="5" fill="#B9C4D6"/>
+          <rect x="-172" y="-4" width="12" height="8" fill="#8D97A8"/>
+          <path d="M-136,-24 H-112 V24 H-136 C-140,24 -142,20 -142,16 V-16 C-142,-20 -140,-24 -136,-24 Z" fill="#F4F4F2" stroke="#B9BABB" stroke-width="1.5"/>
+          <path d="M-120,0 C-70,-8 -20,-92 60,-92 A92,92 0 0 1 60,92 C-20,92 -70,8 -120,0 Z" fill="#1E63C6" stroke="#123F86" stroke-width="2"/>
+          <path d="M10,-70 C40,-84 90,-84 120,-60" fill="none" stroke="#fff" stroke-opacity=".65" stroke-width="7" stroke-linecap="round"/>
         </g>
-        <g id="fx-pack" class="fx" style="opacity:0" aria-hidden="true">
-          <g transform="translate(162,800)">
-            <rect x="-34" y="26" width="68" height="84" rx="14" style="fill:var(--marker-ink,#2F6FE4);fill-opacity:.2" stroke="#51607f" stroke-width="2.5" stroke-dasharray="7 5"/>
-            <rect x="-14" y="2" width="28" height="26" rx="5" fill="#fff" stroke="#51607f" stroke-width="2.5" stroke-dasharray="7 5"/>
-            <path d="M-30,62 H30 V96 Q30,106 20,106 H-20 Q-30,106 -30,96 Z" style="fill:var(--marker-ink,#2F6FE4);fill-opacity:.8"/>
-            <path d="M-46,56 C-80,56 -74,56 -92,56" stroke="#51607f" stroke-width="3" fill="none" stroke-dasharray="7 6" stroke-linecap="round"/>
-            <path d="M-92,56 l10,-8 M-92,56 l10,8" stroke="#51607f" stroke-width="3" fill="none" stroke-linecap="round"/>
-            <circle id="a-pack" cx="0" cy="112" r="1" fill="none"/>
-          </g>
-        </g>
-        <g id="parts">
-<!-- Draw order (back to front): reservoir, plug, tip, body, cap. Base y = assembled top of each part. -->
-<g id="part-reservoir" transform="translate(0,390)" data-base="300">
-  <g transform="translate(0,300)">
-    <rect x="-9" y="-14" width="18" height="16" rx="4" fill="#B9C4D6"/>
-    <path d="M-22,18 C-22,7 -13,0 -7,0 H7 C13,0 22,7 22,18 V280 C22,292 13,300 7,300 H-7 C-13,300 -22,292 -22,280 Z" style="fill:var(--marker-ink,#2F6FE4);fill-opacity:.2" stroke="#8D97A8" stroke-width="2"/>
-    <path d="M-19,92 H19 V280 C19,290 12,296 6,296 H-6 C-12,296 -19,290 -19,280 Z" style="fill:var(--marker-ink,#2F6FE4)" class="ink-level"/>
-    <path d="M-19,92 H19" stroke="#fff" stroke-opacity=".5" stroke-width="2"/>
-    <path d="M-22,18 C-22,7 -13,0 -7,0 H7 C13,0 22,7 22,18 V280 C22,292 13,300 7,300 H-7 C-13,300 -22,292 -22,280 Z" fill="url(#g-glass)"/>
-    <circle id="a-reservoir" cx="-22" cy="150" r="1" fill="none"/>
-  </g>
-</g>
-<g id="part-plug" transform="translate(0,380)" data-base="660">
-  <g transform="translate(0,660)">
-    <rect x="-27" y="-24" width="54" height="26" rx="4" style="fill:var(--marker-ink,#2F6FE4)"/>
-    <rect x="-27" y="-24" width="54" height="26" rx="4" fill="#000" fill-opacity=".25"/>
-    <path d="M-27,-18 l54,6 M-27,-8 l54,6" stroke="#000" stroke-opacity=".3" stroke-width="2"/>
-    <path d="M-33,2 H33 V50 C33,60 27,66 18,66 H-18 C-27,66 -33,60 -33,50 Z" style="fill:var(--marker-ink,#2F6FE4)"/>
-    <path d="M-33,2 H33 V50 C33,60 27,66 18,66 H-18 C-27,66 -33,60 -33,50 Z" fill="url(#g-shade)"/>
-    <ellipse cx="0" cy="62" rx="12" ry="2.5" fill="#000" fill-opacity=".18"/>
-    <circle id="a-plug" cx="33" cy="34" r="1" fill="none"/>
-  </g>
-</g>
-<g id="part-tip" transform="translate(0,-80)" data-base="40">
-  <g transform="translate(0,40)">
-    <g id="tip-main"><use href="#tip-art"/></g>
-    <g id="tip-spare" style="opacity:0"><use href="#tip-art"/></g>
-    <circle id="a-tip" cx="-17" cy="95" r="1" fill="none"/>
-  </g>
-</g>
-<g id="part-body" transform="translate(0,0)" data-base="190">
-  <g transform="translate(0,190)">
-    <path d="M-21,0 H21 C24,30 31,50 32,78 V470 H-32 V78 C-31,50 -24,30 -21,0 Z" fill="url(#g-white)"/>
-    <path d="M-21,0 H21 C24,30 31,50 32,78 V470 H-32 V78 C-31,50 -24,30 -21,0 Z" fill="none" stroke="#B9BABB" stroke-width="1.5"/>
-    <g style="fill:var(--marker-ink,#2F6FE4)">
-      <path d="M-32,118 L32,96 V106 L-32,128 Z"/>
-      <path d="M-32,136 L32,114 V124 L-32,146 Z"/>
-    </g>
-    <text transform="translate(8,300) rotate(-90)" text-anchor="middle" font-family="Avenir Next, Segoe UI, system-ui, sans-serif" font-size="17" font-weight="800" font-style="italic" letter-spacing="2" style="fill:var(--marker-ink,#2F6FE4)">SUPER TIPS REFILL</text>
-    <path d="M-32,452 H32" stroke="#B9BABB" stroke-width="2"/>
-    <g id="open-body">
-      <ellipse cx="0" cy="470" rx="32" ry="8" fill="#CFCFCD"/>
-      <ellipse cx="0" cy="470" rx="25" ry="5.5" fill="#6B6E73"/>
-      <ellipse cx="0" cy="469" rx="20" ry="3.5" fill="#3A3C40"/>
-    </g>
-    <circle id="a-body" cx="32" cy="130" r="1" fill="none"/>
-  </g>
-</g>
-<g id="part-cap" transform="translate(0,-390)" data-base="0">
-  <g transform="translate(0,0)">
-    <path d="M-36,300 V24 C-36,8 -28,0 -16,0 H16 C28,0 36,8 36,24 V300 Z" style="fill:var(--marker-ink,#2F6FE4)"/>
-    <path d="M-36,300 V24 C-36,8 -28,0 -16,0 H16 C28,0 36,8 36,24 V300 Z" fill="url(#g-shade)"/>
-    <rect x="-24" y="16" width="7" height="250" rx="3.5" fill="#fff" opacity=".32"/>
-    <ellipse cx="0" cy="6" rx="14" ry="2.5" fill="#000" fill-opacity=".15"/>
-    <rect x="-38" y="282" width="76" height="18" rx="5" style="fill:var(--marker-ink,#2F6FE4)"/>
-    <rect x="-38" y="282" width="76" height="18" rx="5" fill="#000" fill-opacity=".18"/>
-    <g id="open-cap">
-      <ellipse cx="0" cy="300" rx="38" ry="7" style="fill:var(--marker-ink,#2F6FE4)"/>
-      <ellipse cx="0" cy="300" rx="30" ry="5" fill="#000" fill-opacity=".55"/>
-    </g>
-    <circle id="a-cap" cx="36" cy="150" r="1" fill="none"/>
-  </g>
-</g>
-
+        <g id="ink-marker" style="opacity:0" aria-hidden="true">
+          <rect x="-296" y="-21" width="34" height="42" rx="10" fill="#1E63C6" stroke="#123F86" stroke-width="2"/>
+          <rect x="-272" y="-25" width="218" height="50" rx="15" fill="#FBFBFA" stroke="#123F86" stroke-opacity=".3" stroke-width="2"/>
+          <path d="M-262,15 H-66" fill="none" stroke="#25231F" stroke-opacity=".08" stroke-width="6" stroke-linecap="round"/>
+          <rect x="-150" y="-25" width="16" height="50" fill="#1E63C6"/>
+          <rect x="-126" y="-25" width="6" height="50" fill="#1E63C6" fill-opacity=".55"/>
+          <rect x="-62" y="-19" width="24" height="38" rx="5" fill="#F1F1EF" stroke="#B9BABB" stroke-width="1.5"/>
+          <path d="M2,0 Q-3,-7 -40,-15 L-40,15 Q-3,7 2,0 Z" fill="#1E63C6" stroke="#123F86" stroke-width="1.5" stroke-linejoin="round"/>
         </g>
       </svg>
-
-      <div class="labels" aria-hidden="true">
-        <span class="lbl" data-key="cap" data-for="a-cap" data-side="right">Cap</span>
-        <span class="lbl" data-key="tip" data-for="a-tip" data-side="left">Replaceable tip</span>
-        <span class="lbl" data-key="body" data-for="a-body" data-side="right">Reusable body</span>
-        <span class="lbl" data-key="reservoir" data-for="a-reservoir" data-side="left">Ink wick</span>
-        <span class="lbl" data-key="plug" data-for="a-plug" data-side="right">Rear plug</span>
-        <span class="lbl lbl-note" data-key="pack" data-for="a-pack" data-side="below">Illustrative refill — connection not defined</span>
-      </div>
-
       <p class="story-note"><strong>Student concept for Crayola Super Tips — not affiliated with or endorsed by Crayola.</strong> Concept design — refill mechanism not yet validated.</p>
     </div>
 
     <div class="story-text">
-      <article class="chapter" data-ch="0" id="ch-meet">
-        <p class="kicker"><span>01</span> Meet the marker</p>
-        <h1 class="ch-title">Meet your marker.</h1>
-        <p class="ch-lead">Five parts, one marker. Scroll to see what's inside — and scroll back up to put it together again.</p>
+      <article class="chapter" data-ch="0" id="ink-ch-0">
+        <p class="kicker"><span>01</span> Keep drawing</p>
+        <h1 class="ch-title">Keep drawing.</h1>
+        <p class="ch-lead">Super Tips Refill is our student concept for a washable marker kids already know, redesigned so a grown-up can refill just the colour that runs out.</p>
         <p class="scroll-hint" aria-hidden="true"><span class="scroll-arrow"></span> Keep scrolling</p>
-        <p class="adult-note"><b>For grown-ups</b> This is a student redesign idea for a washable marker. It is not a feature of the Super Tips sold today.</p>
       </article>
 
-      <article class="chapter" data-ch="1" id="ch-refill">
-        <p class="kicker"><span>02</span> Designed to be refilled</p>
-        <h2 class="ch-title">See what's inside.</h2>
-        <p class="ch-lead">The ink soaks into a wick that stays inside the body. In this idea, a grown-up unscrews the back, clicks in a bottle of the same colour, and the wick takes up a measured dose — while kids keep drawing.</p>
-        <p class="adult-note"><b>Still to test</b> Leaks, how cleanly the bottle connects, the right dose, colour quality and washability. The refill picture is only illustrative.</p>
+      <article class="chapter" data-ch="1" id="ink-ch-1">
+        <p class="kicker"><span>02</span> One colour at a time</p>
+        <h2 class="ch-title">One colour ran out?</h2>
+        <p class="ch-lead">Colours don't run out all together — one usually goes first. Today that means the whole marker goes in the bin.</p>
       </article>
 
-      <article class="chapter" data-ch="2" id="ch-tip">
-        <p class="kicker"><span>03</span> A new tip, new possibilities</p>
-        <h2 class="ch-title">A new tip. More ways to draw.</h2>
-        <p class="ch-lead">When a tip wears out, the idea is to swap in a fresh one. Thin lines, bold strokes — the same marker, ready for the next picture.</p>
-        <p class="adult-note"><b>Still to test</b> Whether a swapped tip stays put, how it really draws, and whether fine and bold strokes are achievable.</p>
+      <article class="chapter" data-ch="2" id="ink-ch-2">
+        <p class="kicker"><span>03</span> The idea</p>
+        <h2 class="ch-title">Refill just the blue.</h2>
+        <p class="ch-lead">A grown-up clicks in a bottle of that one colour. The body and cap stay. Kids keep drawing with the same marker.</p>
+        <div class="ch-actions"><a class="btn btn-primary" href="/how-it-could-work/">See how it works</a></div>
       </article>
-
-      <article class="chapter" data-ch="3" id="ch-keep">
-        <p class="kicker"><span>04</span> Keep creating</p>
-        <h2 class="ch-title">Keep creating.</h2>
-        <p class="ch-lead">Same body, fresh parts, more drawing. That's the idea we want to explore.</p>
-        <div class="ch-actions">
-          <a class="btn btn-primary" href="/how-it-could-work/">See how it could work</a>
-          <a class="btn btn-ghost" href="#in-the-box">What's in the box</a>
-        </div>
-        <p class="adult-note"><b>Status</b> Concept design — refill mechanism not yet validated.</p>
-      </article>
-
-      <div class="story-ui">
-        <nav class="story-steps" aria-label="Jump to a chapter of the story">
-          <button type="button" data-p="0"><i></i><span>Meet</span></button>
-          <button type="button" data-p="0.42"><i></i><span>Refill</span></button>
-          <button type="button" data-p="0.72"><i></i><span>New tip</span></button>
-          <button type="button" data-p="0.93"><i></i><span>Keep creating</span></button>
-        </nav>
-        <div class="story-progress" aria-hidden="true"><b id="story-bar"></b></div>
-        <div class="story-links">
-          <button type="button" class="link-btn" id="motion-toggle" aria-pressed="false">Show static view</button>
-          <a class="link-btn" href="#grown-ups">Skip to the grown-ups' summary</a>
-        </div>
-      </div>
     </div>
-
   </div>
 </section>
 
@@ -313,6 +206,6 @@
   </div>
 </footer>
 
-<script defer src="/main.js?v=20261115"></script>
+<script defer src="/main.js?v=20261115b"></script>
 </body>
 </html>

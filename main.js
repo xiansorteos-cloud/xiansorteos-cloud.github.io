@@ -356,8 +356,113 @@
     update();
   }
 
+  /* ---------- Ink hero (home): a stroke drawn by scrolling, then it runs out ---------- */
+  function initInkHero() {
+    var track = document.getElementById('inkhero');
+    var svg = document.getElementById('ink-scene');
+    if (!track || !svg) return;
+
+    var pin = track.querySelector('.story-pin');
+    var chapters = [].slice.call(track.querySelectorAll('.chapter'));
+    var stroke = document.getElementById('ink-stroke');
+    var bottle = document.getElementById('ink-bottle');
+    var marker = document.getElementById('ink-marker');
+    var len = stroke && stroke.getTotalLength ? stroke.getTotalLength() : 0;
+
+    var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+    var isStatic = false;
+    var inView = true;
+    var raf = 0;
+    var cur = -1;
+    var last = 0;
+
+    function setMode() {
+      isStatic = !!(mq && mq.matches);
+      root.classList.toggle('is-static', isStatic);
+      chapters.forEach(function (c) { c.style.opacity = ''; c.style.visibility = ''; c.style.transform = ''; c.style.pointerEvents = ''; });
+      cur = -1;
+      requestUpdate();
+    }
+
+    // Marker tip rides the leading end of the stroke; the barrel leans like a hand-held pen.
+    function placeMarker(t, lift, alpha) {
+      if (!marker || !len) return;
+      var d = t * len;
+      var pt = stroke.getPointAtLength(d);
+      var a = stroke.getPointAtLength(Math.max(0, d - 8));
+      var b = stroke.getPointAtLength(Math.min(len, d + 8));
+      var tan = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
+      var rot = lerp(118, 84, t) + tan * 0.3 - lift * 10;
+      marker.setAttribute('transform', 'translate(' + (pt.x - lift * 30).toFixed(1) + ',' + (pt.y - lift * 80).toFixed(1) + ') rotate(' + rot.toFixed(1) + ')');
+      marker.style.opacity = alpha.toFixed(3);
+    }
+
+    function render(p) {
+      if (isStatic) {
+        if (stroke) stroke.style.strokeDashoffset = '0';
+        if (marker) marker.style.opacity = 0;
+        if (bottle) { bottle.style.opacity = 1; bottle.setAttribute('transform', 'translate(735,255) scale(.62)'); }
+        return;
+      }
+      var x = clamp((p - 0.04) / 0.58, 0, 1);
+      var t = lerp(x, smooth(x), 0.5);
+      if (stroke) stroke.style.strokeDashoffset = (1 - t).toFixed(4);
+      placeMarker(t, smooth((p - 0.64) / 0.12), 1 - smooth((p - 0.67) / 0.1));
+
+      var bOp = smooth((p - 0.76) / 0.14);
+      if (bottle) {
+        bottle.style.opacity = bOp.toFixed(3);
+        bottle.setAttribute('transform', 'translate(' + (735 + (1 - bOp) * 26).toFixed(1) + ',' + (255 - (1 - bOp) * 18).toFixed(1) + ') scale(' + (0.52 + 0.1 * bOp).toFixed(3) + ')');
+      }
+
+      var wins = [win(p, -2, -1, 0.30, 0.37), win(p, 0.38, 0.45, 0.70, 0.78), win(p, 0.80, 0.88, 2, 3)];
+      chapters.forEach(function (c, i) {
+        var a = wins[i] || 0;
+        c.style.opacity = a.toFixed(3);
+        c.style.transform = 'translateY(' + ((1 - a) * 14).toFixed(1) + 'px)';
+        c.style.visibility = a < 0.02 ? 'hidden' : 'visible';
+        c.style.pointerEvents = a < 0.5 ? 'none' : 'auto';
+      });
+    }
+
+    function progress() {
+      if (isStatic) return 1;
+      var r = track.getBoundingClientRect();
+      var range = r.height - pin.offsetHeight;
+      return range > 0 ? clamp(-r.top / range, 0, 1) : 0;
+    }
+    // Eased chase: the drawing trails the scroll position instead of snapping to it.
+    function tick(now) {
+      raf = 0;
+      var target = progress();
+      if (isStatic || cur < 0) {
+        cur = target;
+      } else {
+        var dt = Math.min(400, (now - last) || 16);
+        cur += (target - cur) * (1 - Math.exp(-dt / 140));
+        if (Math.abs(target - cur) < 0.0004) cur = target;
+      }
+      last = now;
+      render(cur);
+      if (cur !== target && inView) requestUpdate();
+    }
+    function requestUpdate() { if (!raf) raf = requestAnimationFrame(tick); }
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (en) { inView = en[0].isIntersecting; if (inView) requestUpdate(); }, { rootMargin: '200px 0px' }).observe(track);
+    }
+    window.addEventListener('scroll', function () { if (inView) requestUpdate(); }, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+    if (mq) {
+      var onChange = function () { setMode(); };
+      if (mq.addEventListener) mq.addEventListener('change', onChange); else if (mq.addListener) mq.addListener(onChange);
+    }
+    setMode();
+  }
+
   safe(initNav, 'nav');
   safe(initReveal, 'reveal');
+  safe(initInkHero, 'inkhero');
   safe(initStory, 'story');
   safe(initKit, 'kit');
   safe(initCalc, 'calc');
