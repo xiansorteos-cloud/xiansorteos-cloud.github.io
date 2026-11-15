@@ -439,3 +439,9 @@ a.pill:hover,a.pill:focus-visible{background:var(--text);color:#fff}
 .faq summary{cursor:pointer;font-weight:800}
 .faq details p{margin:.6em 0 0}
 @media (max-width:820px){.box-grid,.steps3{grid-template-columns:1fr}}
+.brand-logo{height:34px;width:auto;display:block}
+.brand-mark-card img{width:100%;height:auto;max-width:360px;display:block;margin:0 auto 10px}
+@media (max-width:820px){.brand-logo{height:28px}}
+@media (max-width:420px){.brand-logo{height:24px}}
+
+.sw-white{background:linear-gradient(90deg,#D9DADB,#fff,#C9CACB);border:1px solid #ccc}

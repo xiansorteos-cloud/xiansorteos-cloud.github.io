@@ -86,16 +86,16 @@ def schem(step):
     out = [f'<svg class="schem" viewBox="0 0 560 150" role="img" aria-label="Schematic: step {step}" focusable="false">']
     # reservoir (behind body)
     out.append(f'<rect x="{200+sh+dx["res"]}" y="{cy-12}" width="150" height="24" rx="9" fill="#2F6FE4" fill-opacity=".35"{stroke("res")}/>')
-    out.append(f'<rect x="{410+sh+dx["plug"]-6}" y="{cy-16}" width="14" height="32" rx="3" fill="#127a4b"/>')
-    out.append(f'<rect x="{410+sh+dx["plug"]}" y="{cy-24}" width="40" height="48" rx="10" fill="#1E9A62"{stroke("plug")}/>')
+    out.append(f'<rect x="{410+sh+dx["plug"]-6}" y="{cy-16}" width="14" height="32" rx="3" fill="#123F86"/>')
+    out.append(f'<rect x="{410+sh+dx["plug"]}" y="{cy-20}" width="34" height="40" rx="10" fill="#2F6FE4"{stroke("plug")}/>')
     out.append(f'<path d="M{168+sh+dx["tip"]} {cy} l-34 -11 q-8 11 0 22 z" fill="#2F6FE4"{stroke("tip")} transform="translate(0,0)"/>')
-    out.append(f'<rect x="{160+sh+dx["tip"]-6}" y="{cy-14}" width="16" height="28" rx="4" fill="#1E9A62"/>')
+    out.append(f'<rect x="{160+sh+dx["tip"]-6}" y="{cy-12}" width="16" height="24" rx="4" fill="#F1F1EF" stroke="#999" stroke-width="1"/>')
     if spare:
         out.append(f'<path d="M{168+sh-90} {cy-52} l-34 -11 q-8 11 0 22 z" fill="none" stroke="#51607f" stroke-width="2.5" stroke-dasharray="6 5"/>')
         out.append(f'<path d="M{168+sh-86} {cy-40} q20 12 40 24" fill="none" stroke="#51607f" stroke-width="2.5" stroke-dasharray="6 5" stroke-linecap="round"/>')
-    out.append(f'<rect x="{170+sh}" y="{cy-20}" width="250" height="40" rx="12" fill="#F6C21F" stroke="#2b2b2b" stroke-opacity=".25" stroke-width="1.5"/>')
-    out.append(f'<text x="{300+sh}" y="{cy+5}" text-anchor="middle" font-size="12" font-weight="800" letter-spacing="3" fill="#8C5D00" font-family="Avenir Next, Segoe UI, system-ui, sans-serif">SUPER TIPS REFILL</text>')
-    out.append(f'<rect x="{60+sh+dx["cap"]-20}" y="{cy-25}" width="130" height="50" rx="16" fill="#1E9A62"{stroke("cap")}/>')
+    out.append(f'<rect x="{170+sh}" y="{cy-16}" width="250" height="32" rx="10" fill="#FBFBFA" stroke="#2b2b2b" stroke-opacity=".3" stroke-width="1.5"/>')
+    out.append(f'<text x="{300+sh}" y="{cy+5}" text-anchor="middle" font-size="12" font-weight="800" font-style="italic" letter-spacing="2" fill="#2F6FE4" font-family="Avenir Next, Segoe UI, system-ui, sans-serif">SUPER TIPS REFILL</text>')
+    out.append(f'<rect x="{60+sh+dx["cap"]-20}" y="{cy-20}" width="130" height="40" rx="12" fill="#2F6FE4"{stroke("cap")}/>')
     if pack:
         out.append('<rect x="470" y="104" width="52" height="34" rx="9" fill="#2F6FE4" fill-opacity=".2" stroke="#51607f" stroke-width="2.5" stroke-dasharray="6 5"/>')
     out.append('</svg>')
