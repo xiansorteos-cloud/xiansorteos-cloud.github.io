@@ -305,7 +305,7 @@
       }
       list.textContent = '';
       list.appendChild(li('Concept marker', 'cap, reusable body, rear plug'));
-      if (refill) list.appendChild(li('Ink refill, ' + inkEl.getAttribute('data-name').toLowerCase(), 'illustrative; not tested'));
+      if (refill) list.appendChild(li('Refill bottle, ' + inkEl.getAttribute('data-name').toLowerCase(), 'one colour, several doses; illustrative, not tested'));
       if (tips) list.appendChild(li('Spare tips, ' + (style === 'bold' ? 'bold concept' : 'fine-line concept'), 'illustrative; not tested'));
       if (!refill && !tips) list.appendChild(li('Marker only', 'no ink or tip extras chosen'));
     }
@@ -315,35 +315,44 @@
     update();
   }
 
-  /* ---------- Assumption calculator (arithmetic on editable placeholders) ---------- */
+  /* ---------- Two-family calculator (arithmetic on editable assumptions) ---------- */
   function initCalc() {
     var form = document.getElementById('calc');
     if (!form) return;
-    var defaults = { 'c-pack': 3.75, 'c-count': 12, 'c-refill': 1.5, 'c-per': 12, 'c-prem': 0.5 };
+    var defaults = { 'c-pack': 3.58, 'c-kit': 7.16, 'c-bottle': 0.8, 'c-doses': 4, 'c-life': 5, 'c-tipprice': 0.99, 'c-tipevery': 4 };
     function v(id) { var n = parseFloat(document.getElementById(id).value); return isFinite(n) ? n : 0; }
-    function gbp(n) { return '£' + n.toFixed(2); }
+    function gbp(n) { return (n < 0 ? '-£' : '£') + Math.abs(n).toFixed(2); }
     function update() {
-      var pack = v('c-pack'), count = Math.max(1, v('c-count')), refill = v('c-refill'), per = Math.max(1, v('c-per')), prem = v('c-prem');
-      var newM = pack / count, refM = refill / per, save = newM - refM;
-      document.getElementById('o-new').textContent = gbp(newM);
-      document.getElementById('o-ref').textContent = gbp(refM);
-      document.getElementById('o-save').textContent = (save >= 0 ? '' : '-') + gbp(Math.abs(save));
-      var be = document.getElementById('o-be'), msg = document.getElementById('o-msg');
-      if (save <= 0) {
-        be.textContent = 'never';
-        msg.textContent = 'On these numbers a refill costs as much as, or more than, a new marker, so refilling would not save money.';
-      } else if (prem <= 0) {
-        be.textContent = 'none needed';
-        msg.textContent = 'With no upfront extra, every refill cycle is cheaper on these assumptions.';
-      } else {
-        var n = Math.ceil(prem / save);
-        be.textContent = n + (n === 1 ? ' cycle' : ' cycles');
-        msg.textContent = 'On these placeholder numbers the extra upfront cost is recovered after about ' + n + ' refill ' + (n === 1 ? 'cycle' : 'cycles') + '. Real use is untested.';
+      var pack = v('c-pack'), kit = v('c-kit'), bottle = v('c-bottle'), doses = Math.max(1, Math.round(v('c-doses')));
+      var life = Math.min(20, Math.max(1, Math.round(v('c-life'))));
+      var tips = document.getElementById('c-tips').checked, tipPrice = v('c-tipprice'), every = Math.max(1, Math.round(v('c-tipevery')));
+      var refillRound = 12 * bottle / doses;      // ink for all 12 colours once
+      var tipEvent = 3 * tipPrice;                 // 12 tips = 3 packs of 4
+      var a = 0, b = 0, even = 0, cheaper = 0, rows = '';
+      for (var r = 1; r <= life + 1; r++) {
+        a += pack;
+        var note = '';
+        if (r === 1) { b += kit; note = 'kit'; }
+        else {
+          b += refillRound; note = 'refill';
+          if (tips && (r - 1) % every === 0) { b += tipEvent; note = 'refill + tips'; }
+        }
+        var d = a - b;
+        if (!even && Math.abs(d) < 0.005) even = r;
+        if (!cheaper && d >= 0.005) cheaper = r;
+        rows += '<tr><th scope="row">' + r + (r === 1 ? ' (first ink)' : '') + '</th><td>' + gbp(a) + '</td><td>' + gbp(b) + ' <small>' + note + '</small></td><td>' +
+          (Math.abs(d) < 0.005 ? 'equal' : (d > 0 ? 'B spends ' + gbp(d) + ' less' : 'B spends ' + gbp(-d) + ' more')) + '</td></tr>';
       }
+      document.getElementById('o-rows').innerHTML = rows;
+      var msg = document.getElementById('o-msg');
+      if (cheaper) msg.textContent = 'On these numbers Family B spends less from round ' + cheaper + ' (after ' + (cheaper - 1) + ' refills of every colour), if the markers last that long.';
+      else if (even) msg.textContent = 'On these numbers the two families only draw level, at round ' + even + '. Family B never spends less within the marker\'s life.';
+      else msg.textContent = 'On these numbers Family B never spends less within the marker\'s life of ' + life + ' refills.';
     }
     form.addEventListener('input', update);
+    form.addEventListener('change', update);
     var reset = document.getElementById('calc-reset');
-    if (reset) reset.addEventListener('click', function () { Object.keys(defaults).forEach(function (k) { document.getElementById(k).value = defaults[k]; }); update(); });
+    if (reset) reset.addEventListener('click', function () { Object.keys(defaults).forEach(function (k) { document.getElementById(k).value = defaults[k]; }); document.getElementById('c-tips').checked = false; update(); });
     update();
   }
 

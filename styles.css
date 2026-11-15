@@ -402,6 +402,13 @@ html:not(.js) .story-ui{display:none}
 .calc-dl div{display:flex;justify-content:space-between;gap:14px;border-bottom:1px dashed var(--line);padding-bottom:6px}
 .calc-dl dt{font-weight:600}.calc-dl dd{margin:0;font-weight:800}
 .calc-msg{font-weight:700}
+.calc-form h3{margin-top:0}
+.calc-check label{display:flex;gap:8px;align-items:center}
+.calc-check input{width:auto}
+.calc-table{width:100%;border-collapse:collapse;font-size:.92rem;margin-bottom:12px}
+.calc-table th,.calc-table td{text-align:left;padding:6px 8px;border-bottom:1px dashed var(--line);vertical-align:top}
+.calc-table thead th{font-weight:800;border-bottom:2px solid var(--text)}
+.calc-table small{color:var(--muted)}
 .brand-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:16px}
 .brand-card{background:#fff;border:2px solid var(--text);border-radius:var(--r);padding:20px}
 .brand-mark-card svg{width:100%;height:auto}

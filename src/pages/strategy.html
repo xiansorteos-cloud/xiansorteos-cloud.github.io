@@ -18,7 +18,7 @@
         <caption class="sr-only">Today's positioning compared with the proposed positioning</caption>
         <thead><tr><th scope="col"></th><th scope="col">Today (sourced)</th><th scope="col">Target (proposal)</th></tr></thead>
         <tbody>
-          <tr><th scope="row">What it is</th><td>A complete washable marker sold in packs of 12 or a 144-marker Classpack <a href="/concept-and-evidence/#ref1">[1]</a> <a href="/concept-and-evidence/#ref2">[2]</a>.</td><td>A washable marker system: reusable body and cap, with replaceable ink reservoir and tip.</td></tr>
+          <tr><th scope="row">What it is</th><td>A complete washable marker sold in packs of 12 or a 144-marker Classpack <a href="/concept-and-evidence/#ref1">[1]</a> <a href="/concept-and-evidence/#ref2">[2]</a>.</td><td>A washable marker system: reusable body and cap, with a refillable ink wick and replaceable tip.</td></tr>
           <tr><th scope="row">Promise</th><td>Washable, non-toxic, thick and thin lines, ages 3+ (Crayola's wording).</td><td>Keep drawing without replacing the whole marker. Concept; not yet demonstrated.</td></tr>
           <tr><th scope="row">End of life</th><td>Mixed plastics, hard to recycle in practice; take-back scheme closed <a href="/concept-and-evidence/#ref6">[6]</a>.</td><td>Aim for R1, R3 and R4 on the R-ladder <a href="/concept-and-evidence/#r-ladder">(see ladder)</a>.</td></tr>
           <tr><th scope="row">Who handles it</th><td>The child uses; nobody maintains the marker.</td><td>The child draws; a named adult refills and swaps tips, subject to safety evaluation.</td></tr>
@@ -107,7 +107,7 @@
     <div class="wp">
       <div class="wp-ring wp-potential"><h3>Potential</h3><p>Ideas for later: take-back or return of spent parts, school subscriptions. <span class="tag tag-plain">Not developed</span></p></div>
       <div class="wp-ring wp-augmented"><h3>Augmented</h3><p>Ink refill packs, spare tips, an adult guide, a school refill routine. <span class="tag">Concept</span></p></div>
-      <div class="wp-ring wp-actual"><h3>Actual</h3><p>Five-part marker: cap, tip, reservoir, body, plug, with new branding and packaging. <span class="tag">Concept</span></p></div>
+      <div class="wp-ring wp-actual"><h3>Actual</h3><p>Five-part marker: cap, tip, ink wick, body, plug, with new branding and packaging. <span class="tag">Concept</span></p></div>
       <div class="wp-ring wp-core"><h3>Core</h3><p>Colour a child can draw with, easily washed.</p></div>
     </div>
     <p class="small">Proposed use change: adults refill and swap; children only draw. See <a class="text-link" href="/how-it-could-work/">How it could work</a>.</p>
@@ -129,7 +129,7 @@
         <div class="errc-cell"><h4>Create</h4><p>Body reuse: 1 → 5. Replaceable tip: 1 → 5. Among the competitors we reviewed, none offers either.</p></div>
       </div>
     </div>
-    <p class="small"><span class="tag">Open</span> Candidate extra Eliminate factor: buying a full pack to replace one colour — it holds only if refills are sold per colour, which is not yet decided.</p>
+    <p class="small"><span class="tag">Open</span> Candidate extra Eliminate factor: buying a full pack to replace one colour. Refills are now planned per colour (single-colour bottles with several doses), so this factor could apply; to confirm with the group.</p>
     <div class="grid-two">
       <div class="card card-paper"><h3>Porter's generic strategy: focused differentiation</h3><p>Not aiming for the lowest price. The product differentiates through a refillable body and replaceable tip, and attracts an audience that cares about the environment.</p></div>
       <div class="card card-paper"><h3>VRIO</h3>
@@ -185,23 +185,26 @@
 
     <div class="calc">
       <form id="calc" class="calc-form" onsubmit="return false" autocomplete="off">
-        <div class="calc-field"><label for="c-pack">Price of a pack (£)</label><input id="c-pack" type="number" step="0.01" min="0" value="3.75"><small>Sainsbury's listing for 12, 12 Nov 2026.</small></div>
-        <div class="calc-field"><label for="c-count">Markers in a pack</label><input id="c-count" type="number" step="1" min="1" value="12"><small>Pack of 12 <a href="/concept-and-evidence/#ref1">[1]</a>.</small></div>
-        <div class="calc-field"><label for="c-refill">Price of one refill (£)</label><input id="c-refill" type="number" step="0.01" min="0" value="1.50"><small>Pitch said £1–£1.50; refill price not set. <span class="tag tag-plain">Unverified</span></small></div>
-        <div class="calc-field"><label for="c-per">Markers topped up by one refill</label><input id="c-per" type="number" step="1" min="1" value="12"><small>Not defined yet. <span class="tag">Assumption</span></small></div>
-        <div class="calc-field"><label for="c-prem">Extra upfront cost per refillable marker (£)</label><input id="c-prem" type="number" step="0.01" min="0" value="0.50"><small>Placeholder. <span class="tag">Assumption</span></small></div>
+        <h3>Two families, the same drawing</h3>
+        <p class="small">Family A buys a normal pack of 12 each time the ink runs out. Family B buys the refillable kit once, then refills each colour from a bottle. One <b>round</b> = all 12 colours used up once.</p>
+        <div class="calc-field"><label for="c-pack">Normal pack of 12 (£)</label><input id="c-pack" type="number" step="0.01" min="0" value="3.58"><small>Average of six UK retailers, £2.99–£4.50, 15 Nov 2026 <a href="/concept-and-evidence/#ref15">[15]</a>.</small></div>
+        <div class="calc-field"><label for="c-kit">Refillable starter kit: 12 markers with first ink (£)</label><input id="c-kit" type="number" step="0.01" min="0" value="7.16"><small>About twice a normal pack. <span class="tag">Assumption</span></small></div>
+        <div class="calc-field"><label for="c-bottle">One colour refill bottle (£)</label><input id="c-bottle" type="number" step="0.01" min="0" value="0.80"><small>Price not set. <span class="tag">Assumption</span></small></div>
+        <div class="calc-field"><label for="c-doses">Refills in one bottle</label><input id="c-doses" type="number" step="1" min="1" value="4"><small>One colour, several doses. <span class="tag">Assumption</span></small></div>
+        <div class="calc-field"><label for="c-life">Refills a marker lasts</label><input id="c-life" type="number" step="1" min="1" max="20" value="5"><small>Needs endurance tests. <span class="tag">Assumption</span></small></div>
+        <div class="calc-field calc-check"><label><input id="c-tips" type="checkbox"> Include new tips</label><small>Tips wear out. This is the biggest risk to any saving.</small></div>
+        <div class="calc-field"><label for="c-tipprice">Pack of 4 spare tips (£)</label><input id="c-tipprice" type="number" step="0.01" min="0" value="0.99"><small><span class="tag">Assumption</span></small></div>
+        <div class="calc-field"><label for="c-tipevery">Change all tips every … refills</label><input id="c-tipevery" type="number" step="1" min="1" value="4"><small><span class="tag">Assumption</span></small></div>
         <button type="button" class="link-btn" id="calc-reset">Reset to starting assumptions</button>
       </form>
       <div class="calc-out" aria-live="polite">
-        <h3>What the arithmetic says</h3>
-        <dl class="calc-dl">
-          <div><dt>New marker, per marker</dt><dd id="o-new">–</dd></div>
-          <div><dt>Refill, per marker topped up</dt><dd id="o-ref">–</dd></div>
-          <div><dt>Saving per refill cycle</dt><dd id="o-save">–</dd></div>
-          <div><dt>Refill cycles to recover the upfront extra</dt><dd id="o-be">–</dd></div>
-        </dl>
+        <h3>Money spent so far</h3>
+        <div class="table-wrap"><table class="calc-table">
+          <thead><tr><th scope="col">Round</th><th scope="col">A: normal packs</th><th scope="col">B: refillable</th><th scope="col">Difference</th></tr></thead>
+          <tbody id="o-rows"></tbody>
+        </table></div>
         <p id="o-msg" class="calc-msg"></p>
-        <p class="small">If one £1.50 refill topped up only <em>one</em> marker, it would cost many times the price of a new marker (about £0.27–£0.31). Refills only compete on price if one refill serves several markers — the key definition we still need.</p>
+        <p class="small">Both families use the same amount of ink. In real life colours run out unevenly; with single-colour bottles Family B only buys the colours that run out. Prices are student assumptions, not Crayola prices, and nothing here is for sale.</p>
       </div>
     </div>
 
