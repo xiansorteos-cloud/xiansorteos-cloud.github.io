@@ -11,7 +11,7 @@ import re
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SRC = ROOT / "src"
-V = "20261115b"  # cache-buster; bump on every deploy
+V = "20261115c"  # cache-buster; bump on every deploy
 
 PAGES = [
     # slug, output, nav key, title, description, body class
@@ -43,6 +43,10 @@ PAGES = [
      "Concept and evidence — Super Tips Refill concept",
      "Facts, proposed decisions, hypotheses and pending tests kept visibly separate, plus FAQ and what still has to be documented.",
      "page-evidence"),
+    ("404", "404.html", "",
+     "Page not found — Super Tips Refill concept",
+     "That page does not exist on the Super Tips Refill student concept site.",
+     "page-404"),
 ]
 
 OFFSETS = {"cap": -390, "tip": -80, "body": 0, "reservoir": 390, "plug": 380}
@@ -62,44 +66,61 @@ def marker_parts(e):
 
 
 def schem(step):
-    """Small flat horizontal schematic of the five parts for the 'how it could work' sequence."""
-    sh = 70
-    dx = {"cap": 0, "tip": 0, "body": 0, "res": 0, "plug": 0}
-    hi = None
-    spare = False
-    pack = False
-    if step == 1:
-        dx["cap"] = -70; hi = "cap"
-    elif step == 2:
-        dx["cap"] = -70; dx["plug"] = 70; hi = "plug"
-    elif step == 3:
-        dx["cap"] = -70; dx["plug"] = 130; dx["res"] = 120; hi = "res"; pack = True
-    elif step == 4:
-        dx["cap"] = -70; dx["tip"] = -55; hi = "tip"; spare = True
-    elif step == 5:
-        hi = None
-
-    def stroke(k):
-        return ' stroke="#F2674F" stroke-width="4"' if hi == k else ' stroke="#2b2b2b" stroke-opacity=".25" stroke-width="1.5"'
-
+    """Flat horizontal sketch of one step. Parts start assembled and slide to their place when the sketch plays (CSS)."""
+    INK, NAVY, CORAL = "#1E63C6", "#123F86", "#F2674F"
     cy = 70
-    out = [f'<svg class="schem" viewBox="0 0 560 150" role="img" aria-label="Schematic: step {step}" focusable="false">']
-    # reservoir (behind body)
-    out.append(f'<rect x="{200+sh+dx["res"]}" y="{cy-12}" width="150" height="24" rx="9" fill="#2F6FE4" fill-opacity=".35"{stroke("res")}/>')
-    out.append(f'<rect x="{410+sh+dx["plug"]-6}" y="{cy-16}" width="14" height="32" rx="3" fill="#123F86"/>')
-    out.append(f'<rect x="{410+sh+dx["plug"]}" y="{cy-20}" width="34" height="40" rx="10" fill="#2F6FE4"{stroke("plug")}/>')
-    out.append(f'<path d="M{168+sh+dx["tip"]} {cy} l-34 -11 q-8 11 0 22 z" fill="#2F6FE4"{stroke("tip")} transform="translate(0,0)"/>')
-    out.append(f'<rect x="{160+sh+dx["tip"]-6}" y="{cy-12}" width="16" height="24" rx="4" fill="#F1F1EF" stroke="#999" stroke-width="1"/>')
-    if spare:
-        out.append(f'<path d="M{168+sh-90} {cy-52} l-34 -11 q-8 11 0 22 z" fill="none" stroke="#51607f" stroke-width="2.5" stroke-dasharray="6 5"/>')
-        out.append(f'<path d="M{168+sh-86} {cy-40} q20 12 40 24" fill="none" stroke="#51607f" stroke-width="2.5" stroke-dasharray="6 5" stroke-linecap="round"/>')
-    out.append(f'<rect x="{170+sh}" y="{cy-16}" width="250" height="32" rx="10" fill="#FBFBFA" stroke="#2b2b2b" stroke-opacity=".3" stroke-width="1.5"/>')
-    out.append(f'<text x="{300+sh}" y="{cy+5}" text-anchor="middle" font-size="12" font-weight="800" font-style="italic" letter-spacing="2" fill="#2F6FE4" font-family="Avenir Next, Segoe UI, system-ui, sans-serif">SUPER TIPS REFILL</text>')
-    out.append(f'<rect x="{60+sh+dx["cap"]-20}" y="{cy-20}" width="130" height="40" rx="12" fill="#2F6FE4"{stroke("cap")}/>')
-    if pack:
-        out.append('<rect x="470" y="104" width="52" height="34" rx="9" fill="#2F6FE4" fill-opacity=".2" stroke="#51607f" stroke-width="2.5" stroke-dasharray="6 5"/>')
-    out.append('</svg>')
-    return "".join(out)
+    cap, tip, plug = (0, 0), (0, 0), (0, 0)
+    hi = None
+    arriving = False  # step 5: parts start apart and come together
+    if step == 1:
+        cap = (-64, 0); hi = "cap"
+    elif step == 2:
+        cap = (-64, 0); plug = (56, 0); hi = "plug"
+    elif step == 3:
+        cap = (-64, 0); plug = (58, 50); hi = "port"
+    elif step == 4:
+        cap = (-64, 0); tip = (-12, 46); hi = "tip"
+    elif step == 5:
+        cap = (-64, 0); plug = (56, 0); arriving = True
+
+    def grp(dxy, inner):
+        cls = "sp sp-in" if arriving else "sp"
+        return f'<g class="{cls}" style="--dx:{dxy[0]}px;--dy:{dxy[1]}px">{inner}</g>'
+
+    def ring(k):
+        return f' stroke="{CORAL}" stroke-width="4"' if hi == k else ' stroke="#25231F" stroke-opacity=".25" stroke-width="1.5"'
+
+    o = [f'<svg class="schem" viewBox="0 0 560 150" role="img" aria-label="Sketch of step {step}" focusable="false">']
+    # rear plug
+    o.append(grp(plug, f'<rect x="444" y="{cy-16}" width="14" height="32" rx="3" fill="{NAVY}"/>'
+                       f'<rect x="450" y="{cy-20}" width="34" height="40" rx="10" fill="{INK}"{ring("plug")}/>'))
+    # tip (worn tip is set aside in step 4)
+    nib = f'M176,{cy} Q181,{cy-7} 198,{cy-10} V{cy+10} Q181,{cy+7} 176,{cy} Z'
+    collar = f'<rect x="196" y="{cy-12}" width="16" height="24" rx="4" fill="#F1F1EF" stroke="#999" stroke-width="1"/>'
+    worn = ' fill-opacity=".45"' if step == 4 else ''
+    o.append(grp(tip, f'<path d="{nib}" fill="{INK}"{worn}/>{collar}'))
+    if step == 4:
+        o.append(f'<g class="sb" style="--fx:-10px;--fy:-42px"><path d="{nib}" fill="{INK}" stroke="{CORAL}" stroke-width="3" stroke-linejoin="round"/>{collar}</g>')
+    # body
+    o.append(f'<rect x="210" y="{cy-16}" width="250" height="32" rx="10" fill="#FBFBFA" stroke="#25231F" stroke-opacity=".3" stroke-width="1.5"/>')
+    o.append(f'<text x="335" y="{cy+1}" text-anchor="middle" font-size="12" font-weight="800" font-style="italic" letter-spacing="2" fill="{INK}" font-family="Nunito, Avenir Next, Segoe UI, system-ui, sans-serif">SUPER TIPS REFILL</text>')
+    if step == 3:
+        # the wick stays inside: a gauge shows it taking up ink from the rear
+        o.append(f'<rect x="226" y="{cy+7}" width="218" height="5" rx="2.5" fill="{INK}" fill-opacity=".18"/>')
+        o.append(f'<rect class="sf" x="226" y="{cy+7}" width="218" height="5" rx="2.5" fill="{INK}"/>')
+        o.append(f'<rect x="452" y="{cy-20}" width="12" height="40" rx="4" fill="none" stroke="{CORAL}" stroke-width="3"/>')
+        o.append('<g class="sb" style="--fx:26px;--fy:0px">'
+                 f'<rect x="462" y="{cy-6}" width="18" height="12" rx="3" fill="#F4F4F2" stroke="#8D97A8" stroke-width="1.5"/>'
+                 f'<path d="M476,{cy} C496,{cy-4} 508,{cy-25} 526,{cy-25} A25,25 0 0 1 526,{cy+25} C508,{cy+25} 496,{cy+4} 476,{cy} Z" fill="{INK}" stroke="{NAVY}" stroke-width="2"/>'
+                 f'<path d="M514,{cy-17} C524,{cy-21} 536,{cy-19} 543,{cy-11}" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="3" stroke-linecap="round"/></g>')
+    # cap
+    o.append(grp(cap, f'<rect x="112" y="{cy-20}" width="104" height="40" rx="12" fill="{INK}"{ring("cap")}/>'
+                      f'<rect x="122" y="{cy-13}" width="60" height="5" rx="2.5" fill="#fff" fill-opacity=".3"/>'))
+    if step == 5:
+        o.append(f'<g class="sb" style="--fx:0px;--fy:8px"><circle cx="522" cy="{cy}" r="15" fill="#1F9D63"/>'
+                 f'<path d="M514,{cy} l6,6 l11,-12" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>')
+    o.append('</svg>')
+    return "".join(o)
 
 
 # Scores from the group's Person 2 work (Delexa), checked 12/11/2026.
@@ -115,33 +136,38 @@ FACTORS = [
     ("Special colour editions", 4, 1, 1, 1),
 ]
 CURVES = [("Super Tips today", "#25231F", "", 1),
-          ("BIC Kids Visa", "#2F6FE4", "", 3),
+          ("BIC Kids Visa", "#1E63C6", "", 3),
           ("STABILO Trio Scribbi", "#2E8B6E", "", 4),
           ("Super Tips Refill (concept)", "#F2674F", "8 6", 2)]
 
 
 def canvas():
-    W, H, L, R, T, B = 760, 330, 50, 20, 20, 90
+    W, H, L, R, T, B = 800, 330, 56, 64, 20, 90
     n = len(FACTORS)
     xs = [L + i * (W - L - R) / (n - 1) for i in range(n)]
     y = lambda v: T + (5 - v) * (H - T - B) / 4
-    o = [f'<svg class="canvas" viewBox="0 0 {W} {H}" role="img" aria-labelledby="cv-t cv-d" focusable="false"><title id="cv-t">Strategy Canvas, indicative scores</title><desc id="cv-d">Four curves scored 1 to 5 on eight factors. A table with the same scores follows.</desc>']
+    o = [f'<svg class="canvas" id="canvas-svg" viewBox="0 0 {W} {H}" role="img" aria-labelledby="cv-t cv-d" focusable="false"><title id="cv-t">Strategy Canvas, indicative scores</title><desc id="cv-d">Four curves scored 1 to 5 on eight factors. A table with the same scores follows.</desc>']
+    o.append('<defs>' + "".join(f'<clipPath id="cv-clip-{k}"><rect class="cv-clip" x="0" y="0" width="{W}" height="{H}"/></clipPath>' for k in range(len(CURVES))) + '</defs>')
     for v in range(1, 6):
-        o.append(f'<line x1="{L}" x2="{W-R}" y1="{y(v)}" y2="{y(v)}" stroke="#E4D8B9"/><text x="{L-10}" y="{y(v)+4}" text-anchor="end" font-size="11" fill="#5A574F">{v}</text>')
+        o.append(f'<line x1="{L}" x2="{W-R}" y1="{y(v)}" y2="{y(v)}" stroke="#E4D8B9"/><text x="{L-12}" y="{y(v)+4}" text-anchor="end" font-size="11" fill="#5A574F">{v}</text>')
     for x, f in zip(xs, FACTORS):
         o.append(f'<line x1="{x}" x2="{x}" y1="{T}" y2="{H-B}" stroke="#EFE5C8"/>')
         words = f[0].split()
         mid = (len(words) + 1) // 2
         for k, line in enumerate([" ".join(words[:mid]), " ".join(words[mid:])]):
             o.append(f'<text x="{x}" y="{H-B+20+k*14}" text-anchor="middle" font-size="11" fill="#25231F">{line}</text>')
-    for name, col, dash, idx in CURVES:
+    for k, (name, col, dash, idx) in enumerate(CURVES):
         pts = " ".join(f"{x:.1f},{y(f[idx]):.1f}" for x, f in zip(xs, FACTORS))
         d = f' stroke-dasharray="{dash}"' if dash else ""
+        o.append(f'<g class="cv-curve" data-i="{k}" clip-path="url(#cv-clip-{k})">')
         o.append(f'<polyline points="{pts}" fill="none" stroke="{col}" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"{d}/>')
         for x, f in zip(xs, FACTORS):
-            o.append(f'<circle cx="{x:.1f}" cy="{y(f[idx]):.1f}" r="4" fill="{col}"/>')
+            o.append(f'<circle cx="{x:.1f}" cy="{y(f[idx]):.1f}" r="4.5" fill="{col}"/>')
+        o.append('</g>')
     o.append('</svg>')
-    leg = '<ul class="legend">' + "".join(f'<li><i style="background:{c}"></i>{n}</li>' for n, c, d, i in CURVES) + '</ul>'
+    leg = ('<p class="legend-hint">Select a name to isolate its curve.</p><ul class="legend">'
+           + "".join(f'<li><button type="button" class="legend-btn" data-i="{k}" aria-pressed="false"><i style="background:{c}"></i>{n}</button></li>' for k, (n, c, d, i) in enumerate(CURVES))
+           + '</ul>')
     rows = "".join(f'<tr><th scope="row">{f[0]}</th>' + "".join(f'<td>{f[i]}</td>' for _, _, _, i in CURVES) + '</tr>' for f in FACTORS)
     tbl = ('<details class="canvas-data"><summary>View the scores as a table</summary><div class="table-wrap"><table class="grid"><thead><tr><th scope="col">Factor</th>'
            + "".join(f'<th scope="col">{n}</th>' for n, *_ in CURVES) + f'</tr></thead><tbody>{rows}</tbody></table></div></details>')

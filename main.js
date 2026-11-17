@@ -278,6 +278,7 @@
     var main = document.getElementById('tip-main');
     var pack = document.getElementById('kit-pack');
     var level = svg.querySelector('.ink-level');
+    var lastInk = null, lastRefill = false;
 
     function li(text, note) {
       var el = document.createElement('li');
@@ -295,6 +296,10 @@
       svg.style.setProperty('--marker-ink', ink);
       root.style.setProperty('--marker-ink', ink);
       if (level) level.style.opacity = refill ? 1 : 0.15;
+      if (refill && lastInk !== null && (ink !== lastInk || !lastRefill)) {
+        svg.classList.remove('kit-pour'); svg.getBoundingClientRect(); svg.classList.add('kit-pour');
+      }
+      lastInk = ink; lastRefill = refill;
       if (pack) pack.style.opacity = refill ? 1 : 0;
       var sx = style === 'bold' ? 1.45 : 0.8;
       var spareX = -120;
@@ -460,10 +465,147 @@
     setMode();
   }
 
+  /* ---------- Strategy Canvas: curves draw in, legend isolates one ---------- */
+  function initCanvas() {
+    var svg = document.getElementById('canvas-svg');
+    if (!svg) return;
+    var curves = [].slice.call(svg.querySelectorAll('.cv-curve'));
+    var clips = [].slice.call(svg.querySelectorAll('.cv-clip'));
+    var btns = [].slice.call(document.querySelectorAll('.legend-btn'));
+    var W = svg.viewBox.baseVal.width;
+    var focus = -1;
+    function paint(hover) {
+      var f = hover >= 0 ? hover : focus;
+      curves.forEach(function (c, i) { c.style.opacity = f < 0 || f === i ? 1 : 0.14; });
+      btns.forEach(function (b, i) { b.setAttribute('aria-pressed', focus === i ? 'true' : 'false'); });
+    }
+    btns.forEach(function (b, i) {
+      b.addEventListener('click', function () { focus = focus === i ? -1 : i; paint(-1); });
+      b.addEventListener('mouseenter', function () { paint(i); });
+      b.addEventListener('mouseleave', function () { paint(-1); });
+    });
+
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !('IntersectionObserver' in window)) return;
+    var plan = [[0, 900], [350, 900], [700, 900], [1500, 1500]]; // start delay, duration (ms); our own curve last
+    clips.forEach(function (r) { r.setAttribute('width', 0); });
+    var io = new IntersectionObserver(function (en) {
+      if (!en[0].isIntersecting) return;
+      io.disconnect();
+      var t0 = performance.now();
+      (function frame(now) {
+        var busy = false;
+        clips.forEach(function (r, i) {
+          var pl = plan[i] || [0, 900], t = clamp((now - t0 - pl[0]) / pl[1], 0, 1);
+          r.setAttribute('width', (smooth(t) * W).toFixed(1));
+          if (t < 1) busy = true;
+        });
+        if (busy) requestAnimationFrame(frame);
+      })(t0);
+    }, { threshold: 0.35 });
+    io.observe(svg);
+  }
+
+  /* ---------- Step sketches (how it works): each one plays its step when seen ---------- */
+  function initSchem() {
+    var arts = [].slice.call(document.querySelectorAll('.schem'));
+    if (!arts.length) return;
+    if (!('IntersectionObserver' in window)) { arts.forEach(function (s) { s.classList.add('play'); }); return; }
+    var io = new IntersectionObserver(function (en) {
+      en.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('play'); io.unobserve(e.target); } });
+    }, { threshold: 0.6 });
+    arts.forEach(function (s) {
+      io.observe(s);
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'replay'; b.textContent = 'Replay';
+      b.setAttribute('aria-label', 'Replay this step');
+      b.addEventListener('click', function () {
+        s.classList.add('noanim'); s.classList.remove('play');
+        s.getBoundingClientRect();
+        s.classList.remove('noanim'); s.classList.add('play');
+      });
+      s.parentNode.appendChild(b);
+    });
+  }
+
+  /* ---------- Try it (home): use a colour up, refill just that one ---------- */
+  function initTry() {
+    var box = document.getElementById('try');
+    if (!box) return;
+    var svg = document.getElementById('try-svg');
+    var hint = document.getElementById('try-hint');
+    var status = document.getElementById('try-status');
+    var nEl = document.getElementById('try-n');
+    var btns = [].slice.call(box.querySelectorAll('.try-m'));
+    var NS = 'http://www.w3.org/2000/svg';
+    var FULL = 3, next = 0, refills = 0;
+    var PATHS = [
+      'M40,90 C120,30 180,150 260,80 S400,40 470,100',
+      'M90,250 C160,190 240,300 320,230 S470,200 540,260',
+      'M330,60 C380,20 450,30 500,70 S560,150 520,180',
+      'M60,170 C100,140 150,210 200,170 S290,150 330,190',
+      'M370,290 C410,240 460,300 510,255 S560,240 565,295',
+      'M150,40 Q205,120 150,200 T185,305',
+      'M420,120 C460,160 380,200 430,240 S500,260 470,300',
+      'M30,300 C120,280 200,322 290,292'
+    ];
+
+    function setLevel(b, lvl) {
+      b._lvl = lvl;
+      b.style.setProperty('--lvl', (lvl / FULL).toFixed(3));
+      b.classList.toggle('is-empty', lvl === 0);
+      var n = b.getAttribute('data-n');
+      b.querySelector('.try-state').textContent = lvl === 0 ? 'Refill' : lvl === FULL ? 'Full' : lvl === 1 ? 'Low' : '';
+      b.setAttribute('aria-label', n + ' marker, ' + (lvl === 0 ? 'empty. Tap to refill just this colour.' : (lvl === FULL ? 'full' : 'in use') + '. Tap to draw.'));
+    }
+    function stroke(color, dry) {
+      var p = document.createElementNS(NS, 'path');
+      p.setAttribute('d', PATHS[next % PATHS.length]);
+      next++;
+      p.setAttribute('pathLength', '1');
+      p.setAttribute('class', 'try-line' + (dry ? ' dry' : ''));
+      p.setAttribute('stroke', color);
+      p.setAttribute('stroke-width', dry ? 9 : (next % 3 === 0 ? 7 : 16));
+      svg.appendChild(p);
+      while (svg.childNodes.length > 12) svg.removeChild(svg.firstChild);
+      p.getBoundingClientRect();
+      p.setAttribute('class', p.getAttribute('class') + ' on');
+    }
+    function tap(b) {
+      if (b.classList.contains('is-filling')) return;
+      var n = b.getAttribute('data-n');
+      hint.classList.add('off');
+      if (b._lvl === 0) {
+        b.classList.remove('is-empty'); b.classList.add('is-filling');
+        b.style.setProperty('--lvl', '1');
+        refills++; nEl.textContent = refills;
+        status.textContent = n + ' refilled. Same marker, back in the tray.';
+        setTimeout(function () { b.classList.remove('is-filling'); setLevel(b, FULL); }, 900);
+        return;
+      }
+      var lvl = b._lvl - 1;
+      stroke(b.getAttribute('data-c'), lvl === 0);
+      setLevel(b, lvl);
+      status.textContent = lvl === 0 ? n + ' ran out. Tap it again to refill just the ' + n.toLowerCase() + '.' : (lvl === 1 ? n + ' is running low.' : 'Keep drawing.');
+    }
+    function reset() {
+      svg.textContent = ''; next = 0; refills = 0; nEl.textContent = '0';
+      btns.forEach(function (b) { b.classList.remove('is-filling'); setLevel(b, FULL); });
+      hint.classList.remove('off');
+      status.textContent = 'All six markers are full.';
+    }
+    btns.forEach(function (b) { setLevel(b, FULL); b.addEventListener('click', function () { tap(b); }); });
+    var r = document.getElementById('try-reset');
+    if (r) r.addEventListener('click', reset);
+  }
+
   safe(initNav, 'nav');
   safe(initReveal, 'reveal');
   safe(initInkHero, 'inkhero');
   safe(initStory, 'story');
   safe(initKit, 'kit');
   safe(initCalc, 'calc');
+  safe(initCanvas, 'canvas');
+  safe(initSchem, 'schem');
+  safe(initTry, 'try');
 })();

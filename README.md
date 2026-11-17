@@ -10,22 +10,28 @@ python3 -m http.server 8765      # from this folder
 # open http://localhost:8765/
 ```
 Serve it from the web root (links are root-relative). Opening `index.html` with `file://` is not supported.
-Deploy: upload the folder as-is (includes `.htaccess` for Hostinger/Apache cache rules).
+Hosted on GitHub Pages from the `main` branch. (`.htaccess` is only used on Apache hosts; GitHub Pages ignores it.)
 
 ## Routes
-`/`, `/how-it-could-work/`, `/for-schools/`, `/explore-the-kit/`, `/concept-and-evidence/`
+Customer pages: `/`, `/how-it-could-work/`, `/for-schools/`, `/explore-the-kit/`.
+Concept notes: `/strategy/`, `/relaunch/`, `/concept-and-evidence/`. Plus `404.html`.
 
 ## Edit
 - Page content: `src/pages/*.html`, shared header/footer: `src/partials/`.
 - Regenerate static pages: `python3 tools/build.py` (dev-time only; bump `V` there on each deploy).
 - Styles `styles.css`, behaviour `main.js` (classic script, no modules, no dependencies).
+- Fonts: Baloo 2 (headings) and Nunito (body), loaded from Google Fonts, with system fallbacks.
 
-## Exploded view (home)
+## Interactive pieces (all in `main.js`, each in its own `init*`)
+- Home: `initInkHero` (a marker draws a stroke as you scroll, the ink runs out, the refill bottle appears) and `initTry` (tap a marker to use it up, refill just that colour).
+- How it works: `initStory` (exploded marker; scroll drives part offsets and the SVG camera) and `initSchem` (each step sketch plays its step).
+- Strategy: `initCanvas` (Strategy Canvas curves draw in; the legend isolates a curve) and `initCalc` (two-family cost table).
+- Kit: `initKit`.
+All of them fall back to a static view with `prefers-reduced-motion` or without JavaScript.
+
+## Exploded view
 Layered 2D SVG, one group per part (`part-cap`, `part-tip`, `part-body`, `part-reservoir`, `part-plug`) in
-`src/partials/marker-parts.html`. Scroll progress drives part offsets and the SVG `viewBox` (camera) in `main.js`
-(`EXPLODE`, `CAMERA`, `PARTS`), so scrolling up reverses it exactly. Labels are HTML, anchored to
-`a-*` points inside each part. To use final renders: replace the contents of each part group, keep ids and anchors.
-`prefers-reduced-motion` (or the on-page toggle) switches to a static, ordered layout.
+`src/partials/marker-parts.html`. To use final renders: replace the contents of each part group, keep ids and anchors.
 
 ## Status of visuals
-All marker art is provisional original vector drawing (no photos, no official logo, no AI imagery).
+All marker art is provisional original vector drawing made for this project with AI assistance (Claude Code), recorded in the group's AI-use log. No photos and no official logo are used.
