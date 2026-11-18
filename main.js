@@ -324,7 +324,7 @@
   function initCalc() {
     var form = document.getElementById('calc');
     if (!form) return;
-    var defaults = { 'c-pack': 3.58, 'c-kit': 7.16, 'c-bottle': 0.8, 'c-doses': 4, 'c-life': 5, 'c-tipprice': 0.99, 'c-tipevery': 4 };
+    var defaults = { 'c-pack': 3.58, 'c-kit': 7.16, 'c-bottle': 1.2, 'c-doses': 6, 'c-life': 5, 'c-tipprice': 0.99, 'c-tipevery': 4 };
     function v(id) { var n = parseFloat(document.getElementById(id).value); return isFinite(n) ? n : 0; }
     function gbp(n) { return (n < 0 ? '-£' : '£') + Math.abs(n).toFixed(2); }
     function update() {

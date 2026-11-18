@@ -11,7 +11,7 @@ import re
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SRC = ROOT / "src"
-V = "20261115c"  # cache-buster; bump on every deploy
+V = "20261118a"  # cache-buster; bump on every deploy
 
 PAGES = [
     # slug, output, nav key, title, description, body class

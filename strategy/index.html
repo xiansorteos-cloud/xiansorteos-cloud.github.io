@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&amp;family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&amp;display=swap">
-<link rel="stylesheet" href="/styles.css?v=20261115c">
+<link rel="stylesheet" href="/styles.css?v=20261118a">
 <script>document.documentElement.className += ' js';</script>
 </head>
 <body class="page-strategy">
@@ -233,10 +233,10 @@
         <p class="small">Family A buys a normal pack of 12 each time the ink runs out. Family B buys the refillable kit once, then refills each colour from a bottle. One <b>round</b> = all 12 colours used up once.</p>
         <div class="calc-field"><label for="c-pack">Normal pack of 12 (£)</label><input id="c-pack" type="number" step="0.01" min="0" value="3.58"><small>Average of six UK retailers, £2.99–£4.50, 15 Nov 2026 <a href="/concept-and-evidence/#ref15">[15]</a>.</small></div>
         <div class="calc-field"><label for="c-kit">Refillable starter kit: 12 markers with first ink (£)</label><input id="c-kit" type="number" step="0.01" min="0" value="7.16"><small>About twice a normal pack. <span class="tag">Assumption</span></small></div>
-        <div class="calc-field"><label for="c-bottle">One colour refill bottle (£)</label><input id="c-bottle" type="number" step="0.01" min="0" value="0.80"><small>Price not set. <span class="tag">Assumption</span></small></div>
-        <div class="calc-field"><label for="c-doses">Refills in one bottle</label><input id="c-doses" type="number" step="1" min="1" value="4"><small>One colour, several doses. <span class="tag">Assumption</span></small></div>
+        <div class="calc-field"><label for="c-bottle">One colour refill bottle (£)</label><input id="c-bottle" type="number" step="0.01" min="0" value="1.20"><small>About a third of a pack. <span class="tag">Assumption</span></small></div>
+        <div class="calc-field"><label for="c-doses">Refills in one bottle</label><input id="c-doses" type="number" step="1" min="1" value="6"><small>One colour, six doses from a 10&nbsp;ml bottle. <span class="tag">Assumption</span></small></div>
         <div class="calc-field"><label for="c-life">Refills a marker lasts</label><input id="c-life" type="number" step="1" min="1" max="20" value="5"><small>Needs endurance tests. <span class="tag">Assumption</span></small></div>
-        <div class="calc-field calc-check"><label><input id="c-tips" type="checkbox"> Include new tips</label><small>Tips wear out. This is the biggest risk to any saving.</small></div>
+        <div class="calc-field calc-check"><label><input id="c-tips" type="checkbox"> Buy extra tips</label><small>One spare set comes in the kit. Tick this to see what happens if a family buys more. Paying for tips separately is what removes the saving.</small></div>
         <div class="calc-field"><label for="c-tipprice">Pack of 4 spare tips (£)</label><input id="c-tipprice" type="number" step="0.01" min="0" value="0.99"><small><span class="tag">Assumption</span></small></div>
         <div class="calc-field"><label for="c-tipevery">Change all tips every … refills</label><input id="c-tipevery" type="number" step="1" min="1" value="4"><small><span class="tag">Assumption</span></small></div>
         <button type="button" class="link-btn" id="calc-reset">Reset to starting assumptions</button>
@@ -314,6 +314,6 @@
   </div>
 </footer>
 
-<script defer src="/main.js?v=20261115c"></script>
+<script defer src="/main.js?v=20261118a"></script>
 </body>
 </html>
