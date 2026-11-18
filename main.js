@@ -270,13 +270,14 @@
     var list = document.getElementById('kit-summary');
     var E = 0.55;
     var off = { cap: -390, tip: -80, body: 0, reservoir: 390, plug: 380 };
+    // the story marker is on the same page, so every lookup stays inside this svg
     Object.keys(off).forEach(function (k) {
-      var el = document.getElementById('part-' + k);
+      var el = svg.querySelector('#part-' + k + '-k');
       if (el) el.setAttribute('transform', 'translate(0,' + Math.round(off[k] * E) + ')');
     });
-    var spare = document.getElementById('tip-spare');
-    var main = document.getElementById('tip-main');
-    var pack = document.getElementById('kit-pack');
+    var spare = svg.querySelector('#tip-spare-k');
+    var main = svg.querySelector('#tip-main-k');
+    var pack = svg.querySelector('#kit-pack');
     var level = svg.querySelector('.ink-level');
     var lastInk = null, lastRefill = false;
 

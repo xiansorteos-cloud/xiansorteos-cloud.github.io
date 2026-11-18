@@ -11,7 +11,7 @@ import re
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SRC = ROOT / "src"
-V = "20261118a"  # cache-buster; bump on every deploy
+V = "20261118b"  # cache-buster; bump on every deploy
 
 PAGES = [
     # slug, output, nav key, title, description, body class
@@ -56,12 +56,19 @@ def read(p):
     return (SRC / p).read_text(encoding="utf-8")
 
 
-def marker_parts(e):
-    """Marker parts with the explode offset baked in (used before JS takes over)."""
+def marker_parts(e, suffix=""):
+    """Marker parts with the explode offset baked in (used before JS takes over).
+
+    `suffix` renames every id so a second marker can live on the same page as the
+    first one (the landing carries both the story marker and the kit marker).
+    Only ids are renamed: href/url() references point at the shared defs.
+    """
     html = read("partials/marker-parts.html")
     for key, off in OFFSETS.items():
         dy = round(off * e)
         html = html.replace(f'<g id="part-{key}"', f'<g id="part-{key}" transform="translate(0,{dy})"')
+    if suffix:
+        html = re.sub(r'(\sid=")([^"]+)(")', lambda m: m.group(1) + m.group(2) + suffix + m.group(3), html)
     return html
 
 
@@ -183,7 +190,8 @@ def build():
         body = read(f"pages/{slug}.html")
         body = body.replace("{{CANVAS}}", canvas())
         body = body.replace("{{MARKER_DEFS}}", defs)
-        body = body.replace("{{MARKER_PARTS}}", marker_parts(1.0 if slug == "how" else 0.55))
+        body = body.replace("{{MARKER_PARTS_KIT}}", marker_parts(0.55, "-k"))
+        body = body.replace("{{MARKER_PARTS}}", marker_parts(1.0))
         body = re.sub(r"\{\{SCHEM:(\d)\}\}", lambda m: schem(int(m.group(1))), body)
         h = header
         for k in ("home", "how", "schools", "kit", "relaunch", "strategy", "evidence"):

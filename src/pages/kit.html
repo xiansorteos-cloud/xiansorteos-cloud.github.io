@@ -1,85 +1,12 @@
 <section class="page-hero">
   <div class="wrap hero-grid">
     <div>
-      <p class="eyebrow">Pretend kit · not a shop</p>
-      <h1>Explore the proposed kit</h1>
-      <p class="lede">Pick a pretend ink colour and tip style to see what a concept kit could contain. It's a playground for ideas: there's no price, no basket and no availability — and nothing you choose is saved or sent.</p>
+      <p class="eyebrow">Moved</p>
+      <h1>Build your kit</h1>
+      <p class="lede">The kit builder now lives on the front page, with the marker story and the refill steps. Taking you there.</p>
+      <div class="ch-actions"><a class="btn btn-primary" href="/#build">Go to the kit builder</a></div>
     </div>
     <div class="strokes strokes-big" aria-hidden="true"><i></i><i></i><i></i></div>
   </div>
 </section>
-
-<section class="section" aria-labelledby="kit-title">
-  <div class="wrap kit">
-    <div class="kit-visual">
-      <svg id="kit-scene" viewBox="-300 -300 600 1360" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="kit-art-title" focusable="false">
-        <title id="kit-art-title">Illustration of the chosen concept kit</title>
-        {{MARKER_DEFS}}
-        <g id="kit-pack" style="opacity:0" aria-hidden="true">
-          <g transform="translate(150,640)">
-            <g transform="translate(34,58) scale(.5)">
-              <rect x="-172" y="-11" width="40" height="22" rx="5" fill="#B9C4D6"/>
-              <path d="M-136,-24 H-112 V24 H-136 C-140,24 -142,20 -142,16 V-16 C-142,-20 -140,-24 -136,-24 Z" fill="#F4F4F2" stroke="#51607f" stroke-width="4" stroke-dasharray="10 8"/>
-              <path d="M-120,0 C-70,-8 -20,-92 60,-92 A92,92 0 0 1 60,92 C-20,92 -70,8 -120,0 Z" style="fill:var(--marker-ink,#1E63C6);fill-opacity:.85" stroke="#51607f" stroke-width="5" stroke-dasharray="14 10"/>
-              <path d="M10,-70 C40,-84 90,-84 120,-60" fill="none" stroke="#fff" stroke-opacity=".65" stroke-width="7" stroke-linecap="round"/>
-            </g>
-          </g>
-        </g>
-        <g id="parts">
-{{MARKER_PARTS}}
-        </g>
-      </svg>
-      <p class="story-note kit-note"><strong>Student concept for Crayola Super Tips — not affiliated with or endorsed by Crayola.</strong> Concept design — refill mechanism not yet validated. Provisional illustration.</p>
-    </div>
-
-    <div class="kit-panel">
-      <h2 id="kit-title" class="sr-only">Choose what the pretend kit contains</h2>
-      <form id="kit-form" class="kit-form" onsubmit="return false" autocomplete="off">
-        <fieldset>
-          <legend><span class="num">1</span> Concept marker</legend>
-          <label class="opt opt-fixed"><input type="checkbox" checked disabled> <span><strong>Concept marker</strong> <small>Cap, reusable body and rear plug. Always part of the pretend kit.</small></span></label>
-        </fieldset>
-
-        <fieldset>
-          <legend><span class="num">2</span> Colour refill bottle <small>illustrative</small></legend>
-          <label class="opt"><input type="checkbox" name="refill" checked> <span><strong>Include a refill bottle in this colour</strong> <small>Compatibility, leak-tightness and washability not tested.</small></span></label>
-          <div class="swatches" role="radiogroup" aria-label="Pretend ink colour">
-            <label class="sw"><input type="radio" name="ink" value="#1E63C6" data-name="Blue" checked><span style="--c:#1E63C6"></span><em>Blue</em></label>
-            <label class="sw"><input type="radio" name="ink" value="#1F9D63" data-name="Green"><span style="--c:#1F9D63"></span><em>Green</em></label>
-            <label class="sw"><input type="radio" name="ink" value="#F2674F" data-name="Coral"><span style="--c:#F2674F"></span><em>Coral</em></label>
-            <label class="sw"><input type="radio" name="ink" value="#7B4FD6" data-name="Violet"><span style="--c:#7B4FD6"></span><em>Violet</em></label>
-            <label class="sw"><input type="radio" name="ink" value="#0F9AA8" data-name="Teal"><span style="--c:#0F9AA8"></span><em>Teal</em></label>
-            <label class="sw"><input type="radio" name="ink" value="#E8791A" data-name="Orange"><span style="--c:#E8791A"></span><em>Orange</em></label>
-          </div>
-        </fieldset>
-
-        <fieldset>
-          <legend><span class="num">3</span> Spare tips <small>illustrative</small></legend>
-          <label class="opt"><input type="checkbox" name="tips" checked> <span><strong>Include spare tips</strong> <small>Retention and drawing quality not tested.</small></span></label>
-          <div class="seg" role="radiogroup" aria-label="Pretend tip style">
-            <label><input type="radio" name="tipstyle" value="fine" checked><span>Fine-line concept</span></label>
-            <label><input type="radio" name="tipstyle" value="bold"><span>Bold concept</span></label>
-          </div>
-          <p class="small">Whether a tip can really draw fine or bold lines is to be validated.</p>
-        </fieldset>
-        <button type="button" class="link-btn" id="kit-reset">Reset choices</button>
-      </form>
-
-      <section class="summary" aria-live="polite" aria-labelledby="sum-title">
-        <h3 id="sum-title">Your pretend kit</h3>
-        <ul id="kit-summary" class="sum-list"></ul>
-        <p class="sum-note"><strong>Not a shop.</strong> No price, no basket, no availability, and nothing is saved or sent. These are ideas to react to, not products.</p>
-        <div class="ch-actions"><a class="btn btn-primary" href="/how-it-could-work/">See how it could work</a><a class="btn btn-ghost" href="/for-schools/">Schools &amp; nurseries</a></div>
-      </section>
-    </div>
-  </div>
-</section>
-
-<section class="section section-tint">
-  <div class="wrap">
-    <aside class="callout" role="note">
-      <h2>For grown-ups</h2>
-      <p>The kit is a way to talk about the idea — what a family or a school would need to keep track of. It does not claim a refill cycle count, a saving or a validated colour range. In this concept, an adult would handle ink and tips; children simply draw.</p>
-    </aside>
-  </div>
-</section>
+<script>location.replace('/#build');</script>
